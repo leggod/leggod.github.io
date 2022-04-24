@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xinshani.github.io/"/>
-  <updated>2022-04-06T01:45:23.122Z</updated>
+  <updated>2022-04-24T06:00:25.869Z</updated>
   <id>https://xinshani.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>分享一些提升网上冲浪乐趣的工具</title>
-    <link href="https://xinshani.github.io/p/9f7c15e8/"/>
-    <id>https://xinshani.github.io/p/9f7c15e8/</id>
-    <published>2021-06-16T02:53:32.000Z</published>
-    <updated>2022-04-06T01:45:23.122Z</updated>
+    <title>部署个人知识管理系统</title>
+    <link href="https://xinshani.github.io/p/c9a18907/"/>
+    <id>https://xinshani.github.io/p/c9a18907/</id>
+    <published>2022-04-24T02:30:37.000Z</published>
+    <updated>2022-04-24T06:00:25.869Z</updated>
     
     <summary type="html">
     
@@ -29,22 +29,14 @@
       
         
         
-          &lt;blockquote&gt;
-&lt;p&gt;注意&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;不可用于商业，且用且珍惜&lt;/p&gt;
-&lt;h3 id=&quot;v2ray&quot;&gt;&lt;a href=&quot;#v2ray&quot; class=&quot;headerlink&quot;
+          &lt;h3 id=&quot;部署&quot;&gt;&lt;a href=&quot;#部署&quot; class=&quot;headerlink&quot; title=&quot;部署&quot;&gt;&lt;/a&gt;部署&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
         
       
     
     </summary>
     
+      <category term="Docker" scheme="https://xinshani.github.io/categories/Docker/"/>
     
-      <category term="MTProxy" scheme="https://xinshani.github.io/tags/MTProxy/"/>
-    
-      <category term="SSR" scheme="https://xinshani.github.io/tags/SSR/"/>
-    
-      <category term="FRP" scheme="https://xinshani.github.io/tags/FRP/"/>
     
   </entry>
   
