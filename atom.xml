@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>leggod</title>
+  
+  <subtitle>write less do more</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://xinshani.github.io/"/>
+  <updated>2022-04-06T01:45:23.122Z</updated>
+  <id>https://xinshani.github.io/</id>
+  
+  <author>
+    <name>Xin Shan</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>分享一些提升网上冲浪乐趣的工具</title>
+    <link href="https://xinshani.github.io/p/9f7c15e8/"/>
+    <id>https://xinshani.github.io/p/9f7c15e8/</id>
+    <published>2021-06-16T02:53:32.000Z</published>
+    <updated>2022-04-06T01:45:23.122Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;注意&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;不可用于商业，且用且珍惜&lt;/p&gt;
+&lt;h3 id=&quot;v2ray&quot;&gt;&lt;a href=&quot;#v2ray&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="MTProxy" scheme="https://xinshani.github.io/tags/MTProxy/"/>
+    
+      <category term="SSR" scheme="https://xinshani.github.io/tags/SSR/"/>
+    
+      <category term="FRP" scheme="https://xinshani.github.io/tags/FRP/"/>
+    
+  </entry>
+  
+</feed>

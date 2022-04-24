@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="N4Mjt2QZ1MKaxen5Wh5wQd-cte4z8vgrhQ9sc0zAL-w">
+  <meta name="baidu-site-verification" content="OdH3oAAOEP28tcqT">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinshani.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Layer |–TiledMapServiceLayer |       |–ArcGISTiledMapServiceLayer |–DynamicLayer |       |–DynamicMapServiceLayer |                 |–ArcGISDynamicMapServiceLayer |                 |–ArcGISImageServ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Layer">
+<meta property="og:url" content="https://xinshani.github.io/p/251a0e1e/index.html">
+<meta property="og:site_name" content="leggod">
+<meta property="og:description" content="Layer |–TiledMapServiceLayer |       |–ArcGISTiledMapServiceLayer |–DynamicLayer |       |–DynamicMapServiceLayer |                 |–ArcGISDynamicMapServiceLayer |                 |–ArcGISImageServ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.leggod.com/wp-content/uploads/2016/10/5-300x169.jpg">
+<meta property="article:published_time" content="2016-12-02T01:44:46.000Z">
+<meta property="article:modified_time" content="2022-04-06T01:45:23.119Z">
+<meta property="article:author" content="Xin Shan">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="OpenLayers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.leggod.com/wp-content/uploads/2016/10/5-300x169.jpg">
+
+<link rel="canonical" href="https://xinshani.github.io/p/251a0e1e/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Layer | leggod</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e258b0c944e8fc15ceeec0a07ca939fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">leggod</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">write less do more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">34</span></a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404.html" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbnNoYW5p" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xinshani.github.io/p/251a0e1e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xin Shan">
+      <meta itemprop="description" content="小破站不定时分享一些小惊喜~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="leggod">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Layer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-12-02 09:44:46" itemprop="dateCreated datePublished" datetime="2016-12-02T09:44:46+08:00">2016-12-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WebGis/" itemprop="url" rel="index"><span itemprop="name">WebGis</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/p/251a0e1e/" class="post-meta-item leancloud_visitors" data-flag-title="Layer" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/p/251a0e1e/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/p/251a0e1e/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img data-src="http://www.leggod.com/wp-content/uploads/2016/10/5-300x169.jpg" alt="5"></p>
+<hr>
+<p>Layer |–TiledMapServiceLayer |       |–ArcGISTiledMapServiceLayer |–DynamicLayer |       |–DynamicMapServiceLayer |                 |–ArcGISDynamicMapServiceLayer |                 |–ArcGISImageServiceLayer |                 |–GPResultImageLayer |–GraphicsLayer |       |–FeatureLayer |–ElementLayer Layer是最基本的基类，常用的几种图层类型已经用红色标记出来了。 （1）Layer：继承自DependencyObject，并实现了INotifyPropertyChanged接口，是其他图层的基类。 （2）TiledMapServiceLayer：继承自Layer，是所有使用了缓存的地图服务的基类。通过它可以在程序中加入经过缓存的，来自不同数据源的地图服务。比如ArcGIS Server的地图服务，Google Map的地图，Virtual Earth的地图等。 （3）ArcGISTiledMapServiceLayer：继承自TiledMapServiceLayer。这个图层扩展了TiledMapServiceLayer，支持由ArcGIS Server发布的经过缓存的地图服务。 （4）DynamicLayer：继承自Layer，是动态地图服务的基类。 （5）DynamicMapServiceLayer：继承自DynamicLayer，对应于TiledMapServiceLayer，要使用未经过缓存的动态地图服务，就得通过扩展这个图层来实现。 （6）ArcGISDynamicMapServiceLayer：继承自DynamicMapServiceLayer，针对ArcGIS Server 9.3版本发布的动态地图服务。同理，如果要在客户端API中使用其他动态地图服务，比如OGC的WMS服务，则也需要像这个图层一样，扩展上面的DynamicMapServiceLayer来实现。 （7）ArcGISImageServiceLayer：继承自DynamicMapServiceLayer，针对ArcGIS Server 9.3版本发布的Image Service，因为影像服务也属于动态的地图服务。在客户端API中，可以通过ArcGISImageServiceLayer的一些属性，方便通过浏览器来展示服务器端的影像数据，比如通过BandIds属性，可以快速调整影像数据显示波段的组合（RGB通道），提供不同结果供用户查看。<span class="exturl" data-url="aHR0cDovL3NlcnZlcmFwcHMuZXNyaS5jb20vamF2YXNjcmlwdF9leGFtcGxlcy9pbWFnZV9zZXJ2aWNlX2JhbmRfc3Bpbm5lcnMuaHRtbA==">点击这里<i class="fa fa-external-link-alt"></i></span>，查看一个实例。 （8）GPResultImageLayer：继承自DynamicMapServiceLayer，针对Geoprocessing服务所产生的结果。可以请求服务器端的GP服务将结果动态生成一张图片，将此图片作为GPResultImageLayer图层直接添加到Map控件中。 （9）GraphicsLayer：继承自Layer，是图形数据集中展现的地方。GraphicsLayer是保留在内存中的一种图层（与ArcMap、ArcGIS Engine、ArcGIS Server ADF程序中的相应概念类似），顾名思义是很多Graphic的集合，而所有与用户交互的内容通常都用Graphic来显示。比如多边形查询中用户画出的多边形，属性/空间查询结果中的所有要素（Feature）等内容，都是Graphic。可以说，除了地图本身，基本上看到的所有与地理位置有关的东西都可以用Graphic来表示。Graphic对象有3个重要的属性：Geometry，Symbol和Attributes。Geometry代表了一个Graphic的几何形状（可疑是点、线、面任意一种）或地理位置，而Symbol则表示Graphic的呈现样子，比如颜色、效果，同时有了这两个属性（缺一不可），Graphic就可以显示到地图上了。而Attributes是键值对集合，可在里面存储任意类型的对象，比如一个要素的属性信息。 （10）FeatureLayer：继承自GraphicsLayer，这也是ArcGIS API for Silverlight/WPF 中的亮点之一，通过它可以完成一些比较炫的功能。FeatureLayer继承自GraphicsLayer，它与后者的区别是，GraphicsLayer中的Graphic都是人为创建出来的，而FeatureLayer中的Graphic都是从ArcGIS Server发布的服务中读取出来的，因此FeatureLayer比GraphicsLayer多了一个URL属性。这个URL通常指向一个ArcGIS Server发布的MapService或FeatureService的子图层（对应一个FeatureClass）。FeatureLayer有了这个URL后，就可以读取出该服务对应子图层里的所有要素内容，因此FeatureLayer里Graphic的Geometry属性会自动被FeatureClass的Shape字段填充，而Graphic的Attributes字段则会根据要求，被FeatureClass中的属性信息所填充。如果发布服务的服务器是ArcGIS Server 10版本，则Graphic的Symbol属性会自动被服务的DrawingInfo信息填充。另外，FeatureLayer是客户端API中对FeatureService的唯一载体，这是它另一个非常重要的作用（也是主要作用）。 （11）ElementLayer：继承自Layer，它可以用来专门呈现Silverlight/WPF中原生的FrameworkElement，比如视频，音频等。虽然在FillSymbol的Fill属性中也能利用Brush类来展现一段视频，但毕竟有些“小气”，在ElementLayer中可以大大方方的放置Silverlight/WPF元素。虽然在Map控件之外，Grid等布局元素中也能放置Silverlight的东西，但是ElementLayer的优势在于：当一些非地理数据元素随着地图范围的变化（放大，缩小，平移）的时候，无须在地图Extent变化后重新计算客户端坐标，再改变这些元素的位置。 ArcGISTiledMapServiceLayer和ArcGISDynamicMapServiceLayer分别用于加载ArcGIS Server发布的缓存地图服务和动态地图服务。GraphicsLayer和FeatureLayer，可以说这是API中最常用的两种图层，大部分的程序功能都要基于它们来完成。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/OpenLayers/" rel="tag"># OpenLayers</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/1424a4f0/" rel="prev" title="esri.toolbars.Navigation">
+      <i class="fa fa-chevron-left"></i> esri.toolbars.Navigation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/p/bdaaf26b/" rel="next" title="url传值">
+      url传值 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xin Shan</p>
+  <div class="site-description" itemprop="description">小破站不定时分享一些小惊喜~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">鄂ICP备16019332号 </span>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xin Shan</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"HEJA2JkslDjRbAdBKkmBwHtX-gzGzoHsz","app_key":"u54tSVX3vB9mvOJ0bUqBjdOn","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="//cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xinshani.github.io/p/251a0e1e/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : '3NvEpI7nCzdqAnC9rm0vpHrP-gzGzoHsz',
+      appKey     : 'WlafkVnXedjsur4xJpOvGDWn',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

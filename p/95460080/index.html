@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="N4Mjt2QZ1MKaxen5Wh5wQd-cte4z8vgrhQ9sc0zAL-w">
+  <meta name="baidu-site-verification" content="OdH3oAAOEP28tcqT">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xinshani.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JavaScript 复杂判断的更优雅写法前提我们编写js代码时经常遇到复杂逻辑判断的情况，通常大家可以用if&#x2F;else或者switch来实现多个条件判断，但这样会有个问题，随着逻辑复杂度的增加，代码中的if&#x2F;else&#x2F;switch会变得越来越臃肿，越来越看不懂，那么如何更优雅的写判断逻辑，本文带你试一下。 举个例子先看一段代码 &#x2F;**  * 按钮点击事件  * @param {number} s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 复杂判断的更优雅写法">
+<meta property="og:url" content="https://xinshani.github.io/p/95460080/index.html">
+<meta property="og:site_name" content="leggod">
+<meta property="og:description" content="JavaScript 复杂判断的更优雅写法前提我们编写js代码时经常遇到复杂逻辑判断的情况，通常大家可以用if&#x2F;else或者switch来实现多个条件判断，但这样会有个问题，随着逻辑复杂度的增加，代码中的if&#x2F;else&#x2F;switch会变得越来越臃肿，越来越看不懂，那么如何更优雅的写判断逻辑，本文带你试一下。 举个例子先看一段代码 &#x2F;**  * 按钮点击事件  * @param {number} s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-08T02:39:47.000Z">
+<meta property="article:modified_time" content="2022-04-06T01:45:23.117Z">
+<meta property="article:author" content="Xin Shan">
+<meta property="article:tag" content="ES6">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://xinshani.github.io/p/95460080/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JavaScript 复杂判断的更优雅写法 | leggod</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e258b0c944e8fc15ceeec0a07ca939fd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">leggod</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">write less do more</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">34</span></a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404.html" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbnNoYW5p" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xinshani.github.io/p/95460080/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xin Shan">
+      <meta itemprop="description" content="小破站不定时分享一些小惊喜~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="leggod">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 复杂判断的更优雅写法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-11-08 10:39:47" itemprop="dateCreated datePublished" datetime="2018-11-08T10:39:47+08:00">2018-11-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/p/95460080/" class="post-meta-item leancloud_visitors" data-flag-title="JavaScript 复杂判断的更优雅写法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/p/95460080/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/p/95460080/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="JavaScript-复杂判断的更优雅写法"><a href="#JavaScript-复杂判断的更优雅写法" class="headerlink" title="JavaScript 复杂判断的更优雅写法"></a>JavaScript 复杂判断的更优雅写法</h1><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><p>我们编写js代码时经常遇到复杂逻辑判断的情况，通常大家可以用if/else或者switch来实现多个条件判断，但这样会有个问题，随着逻辑复杂度的增加，代码中的if/else/switch会变得越来越臃肿，越来越看不懂，那么如何更优雅的写判断逻辑，本文带你试一下。</p>
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p>先看一段代码</p>
+<pre><code>/**
+ * 按钮点击事件
+ * @param {number} status 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消
+ */
+const onButtonClick = (status)=&gt;{
+  if(status == 1){
+    sendLog(&apos;processing&apos;)
+    jumpTo(&apos;IndexPage&apos;)
+  }else if(status == 2){
+    sendLog(&apos;fail&apos;)
+    jumpTo(&apos;FailPage&apos;)
+  }else if(status == 3){
+    sendLog(&apos;fail&apos;)
+    jumpTo(&apos;FailPage&apos;)
+  }else if(status == 4){
+    sendLog(&apos;success&apos;)
+    jumpTo(&apos;SuccessPage&apos;)
+  }else if(status == 5){
+    sendLog(&apos;cancel&apos;)
+    jumpTo(&apos;CancelPage&apos;)
+  }else {
+    sendLog(&apos;other&apos;)
+    jumpTo(&apos;Index&apos;)
+  }
+}
+</code></pre><p>通过代码可以看到这个按钮的点击逻辑：根据不同活动状态做两件事情，发送日志埋点和跳转到对应页面，大家可以很轻易的提出这段代码的改写方案，switch出场：</p>
+<pre><code>/**
+ * 按钮点击事件
+ * @param {number} status 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消
+ */
+const onButtonClick = (status)=&gt;{
+  switch (status){
+    case 1:
+      sendLog(&apos;processing&apos;)
+      jumpTo(&apos;IndexPage&apos;)
+      break
+    case 2:
+    case 3:
+      sendLog(&apos;fail&apos;)
+      jumpTo(&apos;FailPage&apos;)
+      break
+    case 4:
+      sendLog(&apos;success&apos;)
+      jumpTo(&apos;SuccessPage&apos;)
+      break
+    case 5:
+      sendLog(&apos;cancel&apos;)
+      jumpTo(&apos;CancelPage&apos;)
+      break
+    default:
+      sendLog(&apos;other&apos;)
+      jumpTo(&apos;Index&apos;)
+      break
+  }
+}
+</code></pre><p>嗯，这样看起来比if/else清晰多了，细心的同学也发现了小技巧，case 2和case 3逻辑一样的时候，可以省去执行语句和break，则case 2的情况自动执行case 3的逻辑。 这时有同学会说，还有更简单的写法：</p>
+<pre><code>const actions = {
+  &apos;1&apos;: [&apos;processing&apos;,&apos;IndexPage&apos;],
+  &apos;2&apos;: [&apos;fail&apos;,&apos;FailPage&apos;],
+  &apos;3&apos;: [&apos;fail&apos;,&apos;FailPage&apos;],
+  &apos;4&apos;: [&apos;success&apos;,&apos;SuccessPage&apos;],
+  &apos;5&apos;: [&apos;cancel&apos;,&apos;CancelPage&apos;],
+  &apos;default&apos;: [&apos;other&apos;,&apos;Index&apos;],
+}
+/**
+ * 按钮点击事件
+ * @param {number} status 活动状态：1开团进行中 2开团失败 3 商品售罄 4 开团成功 5 系统取消
+ */
+const onButtonClick = (status)=&gt;{
+  let action = actions[status] || actions[&apos;default&apos;],
+      logName = action[0],
+      pageName = action[1]
+  sendLog(logName)
+  jumpTo(pageName)
+}
+</code></pre><p>上面代码确实看起来更清爽了，这种方法的聪明之处在于：将判断条件作为对象的属性名，将处理逻辑作为对象的属性值，在按钮点击的时候，通过对象属性查找的方式来进行逻辑判断，这种写法特别适合一元条件判断的情况。 是不是还有其他写法呢？有的：</p>
+<pre><code>const actions = new Map([
+  [1, [&apos;processing&apos;,&apos;IndexPage&apos;]],
+  [2, [&apos;fail&apos;,&apos;FailPage&apos;]],
+  [3, [&apos;fail&apos;,&apos;FailPage&apos;]],
+  [4, [&apos;success&apos;,&apos;SuccessPage&apos;]],
+  [5, [&apos;cancel&apos;,&apos;CancelPage&apos;]],
+  [&apos;default&apos;, [&apos;other&apos;,&apos;Index&apos;]]
+])
+/**
+ * 按钮点击事件
+ * @param {number} status 活动状态：1 开团进行中 2 开团失败 3 商品售罄 4 开团成功 5 系统取消
+ */
+const onButtonClick = (status)=&gt;{
+  let action = actions.get(status) || actions.get(&apos;default&apos;)
+  sendLog(action[0])
+  jumpTo(action[1])
+}
+</code></pre><p>这样写用到了es6里的Map对象，是不是更爽了？Map对象和Object对象有什么区别呢？</p>
+<ol>
+<li>一个对象通常都有自己的原型，所以一个对象总有一个”prototype”键。</li>
+<li>一个对象的键只能是字符串或者Symbols，但一个Map的键可以是任意值。</li>
+<li>你可以通过size属性很容易地得到一个Map的键值对个数，而对象的键值对个数只能手动确认。</li>
+</ol>
+<p>我们需要把问题升级一下，以前按钮点击时候只需要判断status，现在还需要判断用户的身份：</p>
+<pre><code>/**
+ * 按钮点击事件
+ * @param {number} status 活动状态：1开团进行中 2开团失败 3 开团成功 4 商品售罄 5 有库存未开团
+ * @param {string} identity 身份标识：guest客态 master主态
+ */
+const onButtonClick = (status,identity)=&gt;{
+  if(identity == &apos;guest&apos;){
+    if(status == 1){
+      //do sth
+    }else if(status == 2){
+      //do sth
+    }else if(status == 3){
+      //do sth
+    }else if(status == 4){
+      //do sth
+    }else if(status == 5){
+      //do sth
+    }else {
+      //do sth
+    }
+  }else if(identity == &apos;master&apos;) {
+    if(status == 1){
+      //do sth
+    }else if(status == 2){
+      //do sth
+    }else if(status == 3){
+      //do sth
+    }else if(status == 4){
+      //do sth
+    }else if(status == 5){
+      //do sth
+    }else {
+      //do sth
+    }
+  }
+}
+</code></pre><p>原谅我不写每个判断里的具体逻辑了，因为代码太冗长了。 原谅我又用了if/else，因为我看到很多人依然在用if/else写这种大段的逻辑判断。 从上面的例子我们可以看到，当你的逻辑升级为二元判断时，你的判断量会加倍，你的代码量也会加倍，这时怎么写更清爽呢？</p>
+<pre><code>const actions = new Map([
+  [&apos;guest_1&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;guest_2&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;guest_3&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;guest_4&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;guest_5&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;master_1&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;master_2&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;master_3&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;master_4&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;master_5&apos;, ()=&gt;{/*do sth*/}],
+  [&apos;default&apos;, ()=&gt;{/*do sth*/}],
+])
+
+/**
+ * 按钮点击事件
+ * @param {string} identity 身份标识：guest客态 master主态
+ * @param {number} status 活动状态：1 开团进行中 2 开团失败 3 开团成功 4 商品售罄 5 有库存未开团
+ */
+const onButtonClick = (identity,status)=&gt;{
+  let action = actions.get(`${identity}_${status}`) || actions.get(&apos;default&apos;)
+  action.call(this)
+}
+</code></pre><p>上述代码核心逻辑是：把两个条件拼接成字符串，并通过以条件拼接字符串作为键，以处理函数作为值的Map对象进行查找并执行，这种写法在多元条件判断时候尤其好用。 当然上述代码如果用Object对象来实现也是类似的：</p>
+<pre><code>const actions = {
+  &apos;guest_1&apos;:()=&gt;{/*do sth*/},
+  &apos;guest_2&apos;:()=&gt;{/*do sth*/},
+  //....
+}
+
+const onButtonClick = (identity,status)=&gt;{
+  let action = actions[`${identity}_${status}`] || actions[&apos;default&apos;]
+  action.call(this)
+}
+</code></pre><p>如果有些同学觉得把查询条件拼成字符串有点别扭，那还有一种方案，就是用Map对象，以Object对象作为key：</p>
+<pre><code>const actions = new Map([
+  [{identity:&apos;guest&apos;,status:1},()=&gt;{/*do sth*/}],
+  [{identity:&apos;guest&apos;,status:2},()=&gt;{/*do sth*/}],
+  //...
+])
+
+const onButtonClick = (identity,status)=&gt;{
+  let action = [...actions].filter(([key,value])=&gt;(key.identity == identity &amp;&amp; key.status == status))
+  action.forEach(([key,value])=&gt;value.call(this))
+}
+</code></pre><p>是不是又高级了一点点？ 这里也看出来Map与Object的区别，Map可以用任何类型的数据作为key。 我们现在再将难度升级一点点，假如guest情况下，status1-4的处理逻辑都一样怎么办，最差的情况是这样：</p>
+<pre><code>const actions = new Map([
+  [{identity:&apos;guest&apos;,status:1},()=&gt;{/* functionA */}],
+  [{identity:&apos;guest&apos;,status:2},()=&gt;{/* functionA */}],
+  [{identity:&apos;guest&apos;,status:3},()=&gt;{/* functionA */}],
+  [{identity:&apos;guest&apos;,status:4},()=&gt;{/* functionA */}],
+  [{identity:&apos;guest&apos;,status:5},()=&gt;{/* functionB */}],
+  //...
+])
+
+const actions = ()=&gt;{
+  const functionA = ()=&gt;{/*do sth*/}
+  const functionB = ()=&gt;{/*do sth*/}
+  return new Map([
+    [{identity:&apos;guest&apos;,status:1},functionA],
+    [{identity:&apos;guest&apos;,status:2},functionA],
+    [{identity:&apos;guest&apos;,status:3},functionA],
+    [{identity:&apos;guest&apos;,status:4},functionA],
+    [{identity:&apos;guest&apos;,status:5},functionB],
+    //...
+  ])
+}
+
+const onButtonClick = (identity,status)=&gt;{
+  let action = [...actions()].filter(([key,value])=&gt;(key.identity == identity &amp;&amp; key.status == status))
+  action.forEach(([key,value])=&gt;value.call(this))
+}
+</code></pre><p>这样写已经能满足日常需求了，但认真一点讲，上面重写了4次functionA还是有点不爽，假如判断条件变得特别复杂，比如identity有3种状态，status有10种状态，那你需要定义30条处理逻辑，而往往这些逻辑里面很多都是相同的，这似乎也是笔者不想接受的，那可以这样实现:</p>
+<pre><code>const actions = ()=&gt;{
+  const functionA = ()=&gt;{/*do sth*/}
+  const functionB = ()=&gt;{/*do sth*/}
+  return new Map([
+    [/^guest_[1-4]$/,functionA],
+    [/^guest_5$/,functionB],
+    //...
+  ])
+}
+
+const onButtonClick = (identity,status)=&gt;{
+  let action = [...actions()].filter(([key,value])=&gt;(key.test(`${identity}_${status}`)))
+  action.forEach(([key,value])=&gt;value.call(this))
+}
+</code></pre><p>这里Map的优势更加凸显，可以用正则类型作为key了，这样就有了无限可能，假如需求变成，凡是guest情况都要发送一个日志埋点，不同status情况也需要单独的逻辑处理，那我们可以这样写:</p>
+<pre><code>const actions = ()=&gt;{
+  const functionA = ()=&gt;{/*do sth*/}
+  const functionB = ()=&gt;{/*do sth*/}
+  const functionC = ()=&gt;{/*send log*/}
+  return new Map([
+    [/^guest_[1-4]$/,functionA],
+    [/^guest_5$/,functionB],
+    [/^guest_.*$/,functionC],
+    //...
+  ])
+}
+
+const onButtonClick = (identity,status)=&gt;{
+  let action = [...actions()].filter(([key,value])=&gt;(key.test(`${identity}_${status}`)))
+  action.forEach(([key,value])=&gt;value.call(this))
+}
+</code></pre><p>也就是说利用数组循环的特性，符合正则条件的逻辑都会被执行，那就可以同时执行公共逻辑和单独逻辑，因为正则的存在，你可以打开想象力解锁更多的玩法，本文就不赘述了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文已经教你了8种逻辑判断写法，包括：</p>
+<ol>
+<li>if/else</li>
+<li>switch</li>
+<li>一元判断时：存到Object里</li>
+<li>一元判断时：存到Map里</li>
+<li>多元判断时：将condition拼接成字符串存到Object里</li>
+<li>多元判断时：将condition拼接成字符串存到Map里</li>
+<li>多元判断时：将condition存为Object存到Map里</li>
+<li>多元判断时：将condition写作正则存到Map里</li>
+</ol>
+<p>至此，本文也将告一段落，愿你未来的人生里，不只是有if/else/switch。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ES6/" rel="tag"># ES6</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/p/68190613/" rel="prev" title="JavaScript 开发者10种必备VS Code扩展">
+      <i class="fa fa-chevron-left"></i> JavaScript 开发者10种必备VS Code扩展
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/p/35cb3085/" rel="next" title="ES6 系列之 defineProperty 与 proxy">
+      ES6 系列之 defineProperty 与 proxy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-复杂判断的更优雅写法"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 复杂判断的更优雅写法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前提"><span class="nav-number">1.0.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个例子"><span class="nav-number">1.0.2.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.0.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Xin Shan</p>
+  <div class="site-description" itemprop="description">小破站不定时分享一些小惊喜~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><span class="exturl" data-url="aHR0cDovL3d3dy5iZWlhbi5taWl0Lmdvdi5jbg==">鄂ICP备16019332号 </span>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xin Shan</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"HEJA2JkslDjRbAdBKkmBwHtX-gzGzoHsz","app_key":"u54tSVX3vB9mvOJ0bUqBjdOn","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="//cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/three.min.js"></script>
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xinshani.github.io/p/95460080/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : false,
+      appId      : '3NvEpI7nCzdqAnC9rm0vpHrP-gzGzoHsz',
+      appKey     : 'WlafkVnXedjsur4xJpOvGDWn',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
