@@ -33,7 +33,7 @@
 <meta property="og:description" content="前言众所周知、Docker已经成为了开发者必会的技能之一，也成为家庭软路由、NAS的必装之一。大家都知道了它的优点，所以我不多叙述。说一个我使用它的原因，我有四个工作环境，两个Windows、两个MacOS、一个CentOS。仅为了每次 git clone后不想因为装依赖而抓狂。本文会用一个NGINX+PHP的环境给大家提供思路，有了思路，其他环境也是一样的搭建，没有难度，有些手把手的内容就略了。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-06-23T08:15:03.000Z">
-<meta property="article:modified_time" content="2022-06-27T01:45:25.978Z">
+<meta property="article:modified_time" content="2022-06-28T01:43:56.382Z">
 <meta property="article:author" content="Xin Shan">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -239,15 +239,49 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>众所周知、Docker已经成为了开发者必会的技能之一，也成为家庭软路由、NAS的必装之一。大家都知道了它的优点，所以我不多叙述。说一个我使用它的原因，我有四个工作环境，两个Windows、两个MacOS、一个CentOS。仅为了每次 <code>git clone</code>后不想因为装依赖而抓狂。本文会用一个<code>NGINX</code>+<code>PHP</code>的环境给大家提供思路，有了思路，其他环境也是一样的搭建，没有难度，有些手把手的内容就略了。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>镜像<br>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
+<li>容器<br>容器的实质是进程。<br>容器内的进程是运行在一个隔离的环境里，容器可以拥有自己的 root 文件系统、自己的网络配置、自己的进程空间，甚至自己的用户 ID 空间。<br>容器消亡时，任何保存于容器存储层的信息都会随容器删除而丢失。所以容器不应该向其存储层内写入任何数据，官方推荐使用数据卷</li>
+<li>Docker Registry<br>如果我们要使用他人的镜像，我们就需要一个集中的存储、分发镜像的服务，Docker Registry 就是这样的服务。</li>
+</ul>
 <h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><p>略~，<br>不过提一点，如果你的主机在国内最好安装之后的第一件是配置一下镜像加速器，提供3个参考<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">阿里云加速器(点击管理控制台 -&gt; 登录账号(淘宝账号) -&gt; 右侧镜像工具 -&gt; 镜像加速器 -&gt; 复制加速器地址)</span><br><span class="line">网易云加速器 https://hub-mirror.c.163.com</span><br><span class="line">百度云加速器 https://mirror.baidubce.com</span><br></pre></td></tr></table></figure></p>
 <h2 id="Docker-命令"><a href="#Docker-命令" class="headerlink" title="Docker 命令"></a>Docker 命令</h2><p>装完之后就可以使用 docker 命令了，比如<code>docker ps</code> <code>docker images</code> <code>docker build</code>等，详见官方文档 <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vZW5naW5lL3JlZmVyZW5jZS9jb21tYW5kbGluZS9jbGkv">Docker command line<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
-<p>ps:可以借助我的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xlZ2dvZC9zZWxlY3Rpb24tdHJhbnNsYXRl">Chrome破解小插件<i class="fa fa-external-link-alt"></i></span> 更好的帮助大家阅读英文文档</p>
+<p>ps：可以借助我的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xlZ2dvZC9zZWxlY3Rpb24tdHJhbnNsYXRl">Chrome破解小插件<i class="fa fa-external-link-alt"></i></span> 更好的帮助大家阅读英文文档</p>
 </blockquote>
-<p>比如运行一个<code>ubuntu</code>镜像</p>
+<p>比如运行一个<code>Ubuntu</code>镜像</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">run</span> -<span class="keyword">it</span> <span class="comment">--rm ubuntu:18.04 bash</span></span><br></pre></td></tr></table></figure>
-<p>然而并没有什么用，很多第三方的包括官方的图形化操作都可以让你忘却这些命令，什么情况会用到这些命令呢，举一个例子，安装一个<code>speedtest</code>，大可不必写<code>dockerfile</code><br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// run 会自动下载安装 adolfintel/speedtest 镜像</span></span><br><span class="line"><span class="comment">// -p 主机的8888端口映射到容器80端口</span></span><br><span class="line"><span class="comment">// -d 后台运行容器</span></span><br><span class="line">docker run -p <span class="number">8888</span>:<span class="number">80</span> -d adolfintel/speedtest</span><br></pre></td></tr></table></figure><br>学习docker如果到止步于此就太可惜了，后面的才是精华。</p>
-<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>命令行的方式肯定是满足不了我们的需求的，使用<code>dockefile</code>迫在眉睫，<code>dockerfile</code>其实也是几个命令行的事情，其中的单词命令也不需要死记，我们来定一个需求，一个带有git环境的ubuntu镜像。通个这个需求就可以得到一个思路，写其他的dockerfile也是八九不离其中。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1：首先就是拉取一个基础镜像（镜像就是一个系统，比如Windows，同时也可以是一个安装了众多软件的Windows，甚至是你自己做的镜像）</span></span><br><span class="line"><span class="comment"># 2：建议养成好习惯带上版本号或者tag信息，不然将来要踩坑</span></span><br><span class="line"><span class="keyword">FROM</span> ubuntu:rolling</span><br><span class="line"></span><br><span class="line"><span class="comment">#1：在国内关键的就是设置一下镜像的软件源，比如npm设置taobao源是一样的。</span></span><br><span class="line"><span class="comment">#2：RUN 后面的东西和其他的shell一样写</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用过Ubuntu的应该都知道先更新后安装软件</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt update         &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get install -y git  &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get clean</span></span><br></pre></td></tr></table></figure><br>以上就是实现了我们的小需求了，比如安装 <code>curl</code> 就信手拈来了。</p>
+<p>然而并没有什么用，很多第三方的包括官方的图形化操作都可以让你忘却这些命令，什么情况会用到这些命令呢，举一个例子，安装一个<code>speedtest</code>，大可不必写<code>Dockerfile</code><br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// run 会自动下载安装 adolfintel/speedtest 镜像</span></span><br><span class="line"><span class="comment">// -p 主机的8888端口映射到容器80端口</span></span><br><span class="line"><span class="comment">// -d 后台运行容器</span></span><br><span class="line">docker run -p <span class="number">8888</span>:<span class="number">80</span> -d adolfintel/speedtest</span><br></pre></td></tr></table></figure><br>学习docker如果到止步于此就太可惜了，后面的才是精华。</p>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>命令行的方式肯定是满足不了我们的需求的，使用<code>Dockefile</code>迫在眉睫，<code>Dockerfile</code>其实也是几个命令行的事情，其中的单词命令也不需要死记.</p>
+<h4 id="常用的指令"><a href="#常用的指令" class="headerlink" title="常用的指令"></a>常用的指令</h4><p>后面如果用到每个指令会详细讲解</p>
+<blockquote>
+<p>ps：Dockerfile 中每一个指令都会建立一个新的镜像，下一个指令就是在上一个指令新建的镜像上面执行。如果哪天遇到了刚装的NODE、NPM 提示 not found 记得回来看这个提示。</p>
+<ul>
+<li>FROM 指定基础镜像</li>
+<li>RUN 执行命令</li>
+<li>COPY 复制文件</li>
+<li>ARG 构建参数</li>
+<li>ENV 设置环境变量</li>
+<li>WORKDIR 指定工作目录</li>
+<li>…</li>
+</ul>
+</blockquote>
+<h4 id="练手1"><a href="#练手1" class="headerlink" title="练手1"></a>练手1</h4><p>我们来定一个需求，一个带有git环境的ubuntu镜像。通个这个需求就可以得到一个思路，写其他的dockerfile也是八九不离其中。</p>
+<p>Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1：首先就是拉取一个基础镜像（镜像就是一个系统，比如Windows，同时也可以是一个安装了众多软件的Windows，甚至是你自己做的镜像）</span></span><br><span class="line"><span class="comment"># 2：建议养成好习惯带上版本号或者tag信息，不然将来要踩坑</span></span><br><span class="line"><span class="keyword">FROM</span> ubuntu:rolling</span><br><span class="line"></span><br><span class="line"><span class="comment">#1：在国内关键的就是设置一下镜像的软件源，比如npm设置taobao源是一样的。</span></span><br><span class="line"><span class="comment">#2：RUN 后面的东西和其他的shell一样写</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list &amp;&amp; \</span></span><br><span class="line"><span class="bash">    sed -i s/security.ubuntu.com/mirrors.aliyun.com/g /etc/apt/sources.list</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用过Ubuntu的应该都知道先更新后安装软件</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt update         &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get install -y git  &amp;&amp; \</span></span><br><span class="line"><span class="bash">    apt-get clean</span></span><br></pre></td></tr></table></figure><br>以上就是实现了我们的小需求了，比如安装 <code>curl</code> 就信手拈来了。</p>
+<h4 id="练手2"><a href="#练手2" class="headerlink" title="练手2"></a>练手2</h4><p>有两种情况下，我们会用到 <code>Dockerfile</code> ，其一就是配合<code>docker-compose</code>，其二就是<code>docker build</code>。其一后面说，其二你必须知道，这是基础。<br>Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将镜像上下文中的 文件 复制到 容器目录</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./package.json /var/www/</span></span><br></pre></td></tr></table></figure></p>
+<p>构建镜像<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [.] 实际上是在指定上下文的目录，千万别掉</span></span><br><span class="line"><span class="comment"># [:v3] 让你可以快速从众多镜像中找到该镜像</span></span><br><span class="line">docker build nginx:v3 .</span><br></pre></td></tr></table></figure></p>
+<p>你可以使用 docker run 去运行容器了</p>
+<h2 id="终极奥义-Docker-Compose"><a href="#终极奥义-Docker-Compose" class="headerlink" title="终极奥义 Docker Compose"></a>终极奥义 Docker Compose</h2><p><code>Compose</code> 项目是 <code>Docker</code> 官方的开源项目，负责实现对 <code>Docker</code> 容器集群的快速编排<br><code>Compose</code> 定位是 「定义和运行多个 <code>Docker</code> 容器的应用」<br>· 必须使用 <code>Dockerfile</code><br>Mac、Windows 自带 docker-compose 二进制文件</p>
+<h4 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h4><ul>
+<li>build 构建（重新构建）项目中的服务容器</li>
+<li>ports 主机端口映射到容器</li>
+<li>restart 重启项目中的服务</li>
+<li>volumes </li>
+<li>depends_on 解决容器的依赖、启动先后的问题</li>
+<li>expose 暴露端口，但不映射到宿主机，只被连接的服务访问</li>
+<li>networks 配置容器连接的网络</li>
+<li>pid 跟主机系统共享进程命名空间。打开该选项的容器之间，以及容器和宿主机系统之间可以通过进程 ID 来相互访问和操作</li>
+</ul>
 
     </div>
 
@@ -328,7 +362,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Docker"><span class="nav-number">2.</span> <span class="nav-text">安装Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-命令"><span class="nav-number">3.</span> <span class="nav-text">Docker 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">4.</span> <span class="nav-text">Dockerfile</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Docker"><span class="nav-number">3.</span> <span class="nav-text">安装Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-命令"><span class="nav-number">4.</span> <span class="nav-text">Docker 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">5.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的指令"><span class="nav-number">5.0.1.</span> <span class="nav-text">常用的指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练手1"><span class="nav-number">5.0.2.</span> <span class="nav-text">练手1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练手2"><span class="nav-number">5.0.3.</span> <span class="nav-text">练手2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终极奥义-Docker-Compose"><span class="nav-number">6.</span> <span class="nav-text">终极奥义 Docker Compose</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见命令"><span class="nav-number">6.0.1.</span> <span class="nav-text">常见命令</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
