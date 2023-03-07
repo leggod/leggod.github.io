@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -242,19 +242,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/06/87k58PICgTY_1024-1024x734.jpg" alt=""></p>
+        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/06/87k58PICgTY_1024-1024x734.jpg"></p>
 <hr>
 <p>几个月前，就开始耕耘react了。网上七七八八的教程老又杂，包括一些react的一些书籍也都是很早之前的。虽说一些原理还是相通的，但是不建议新手学习(特别是0.14之前的版本简直是误人子弟)。踩了太多的坑了，拿出来先分享一下，我们学习之前，其实可以来分析分析react或者说框架什么的。</p>
 <p>首先，作为一个新时代的web前端高级工程师，记住是高级。那么多的框架和技术，学习是很有必要的，但是别跟风学。所有的框架都是为了简化开发难度的，也不用害怕。并且像angular、react、vue。被说成是mvc、v、mvvm什么乱七八糟的想怎么定义都行，一句话解释就是为了简化DOM操作。其中，react并不是一套完整的解决方案，以至于常在口边念叨的react其实是一套全家桶，建厂生产加工包装销售的一条龙服务。react、redux\flux、react-dom、jsx\babel、react-router、webpack、Sass\Less、ES6\ES5、node\npm等一些列解决方案来构建react app。</p>
 <p>这么多东西，我们当然是需要些基础的，但是呢，没必要一个个学，<code>如果你不知道是否需要它，那就是不需要它</code>，这里我们用的技术全都是最新的。</p>
 <p><strong>第一、react</strong><br>参考资源：<span class="exturl" data-url="aHR0cHM6Ly9mYWNlYm9vay5naXRodWIuaW8vcmVhY3Qv">react官网<i class="fa fa-external-link-alt"></i></span><br>创建一个虚拟DOM有很多种方法，但是我们结合es6最新的语法class，所以如果我们自己在网上看到的些，都是官方不推荐的做法，比如createElement()、React.createClass()、更有甚者用React.render()输出虚拟DOM到页面，这都是0.14之前的版本，太老了会误导我们。0.14的版本把react分成了react和react-dom两个部分</p>
-<p>//ES6的语法导入react import React from “react”; //React.Component这个React内置的构造函数上继承一些有用的方法。比如钩子函数等。 //class里面的方法与方法之间千万别加 ‘ , ’ class App extends React.Component { //render方法是必须的 render() { //为了避免JavaScript自动添加分号的机制给我们带来麻烦，在换行的JSX外面添加一对小括号 return ( …JSX… ) } } //以下写法和上面是等价的 import React,{ Component } from “react”; class App extends Component { render() { return ( …JSX… ) } }</p>
+<p>&#x2F;&#x2F;ES6的语法导入react import React from “react”; &#x2F;&#x2F;React.Component这个React内置的构造函数上继承一些有用的方法。比如钩子函数等。 &#x2F;&#x2F;class里面的方法与方法之间千万别加 ‘ , ’ class App extends React.Component { &#x2F;&#x2F;render方法是必须的 render() { &#x2F;&#x2F;为了避免JavaScript自动添加分号的机制给我们带来麻烦，在换行的JSX外面添加一对小括号 return ( …JSX… ) } } &#x2F;&#x2F;以下写法和上面是等价的 import React,{ Component } from “react”; class App extends Component { render() { return ( …JSX… ) } }</p>
 <p>react的生命周期，创建期getInitialState初始化状态、getDefaultProp设置默认属性在es6里面都就没必要这么麻烦了，</p>
-<p>//初始化默认状态 class Counter extends Component { //构造函数，组件实例化的时候会首先执行。 constructor(props) { // ES6中类的constructor函数可以通过super访问其父类的构造函数 super(props); this.state = { count: props.initialCount }; } render() { // … } } //设置默认属性 Counter.defaultProps = { initialCount: 0 };</p>
-<p><strong>第二、jsx/babel</strong><br>使用jsx很容易就创建虚拟DOM，babel是可以把es6转成es5，编译jsx，甚至可以吧es6转成es7。官方推荐的语法糖。</p>
-<p>import React,{ Component } from “react”; class App extends Component { render() { var class=’box’; return ( //jsx只有一个顶级元素,所以在两个div最外面再套一个div。 //HTML怎么写，jsx就怎么写。 //{} 里面写js <div className={class} style={ {color:red}}>{/<em>这里是注释</em>/} <div>1</div> <div>2</div> </div> ) } }</p>
+<p>&#x2F;&#x2F;初始化默认状态 class Counter extends Component { &#x2F;&#x2F;构造函数，组件实例化的时候会首先执行。 constructor(props) { &#x2F;&#x2F; ES6中类的constructor函数可以通过super访问其父类的构造函数 super(props); this.state &#x3D; { count: props.initialCount }; } render() { &#x2F;&#x2F; … } } &#x2F;&#x2F;设置默认属性 Counter.defaultProps &#x3D; { initialCount: 0 };</p>
+<p><strong>第二、jsx&#x2F;babel</strong><br>使用jsx很容易就创建虚拟DOM，babel是可以把es6转成es5，编译jsx，甚至可以吧es6转成es7。官方推荐的语法糖。</p>
+<p>import React,{ Component } from “react”; class App extends Component { render() { var class&#x3D;’box’; return ( &#x2F;&#x2F;jsx只有一个顶级元素,所以在两个div最外面再套一个div。 &#x2F;&#x2F;HTML怎么写，jsx就怎么写。 &#x2F;&#x2F;{} 里面写js &lt;div className&#x3D;{class} style&#x3D;{ {color:red}}&gt;{&#x2F;<em>这里是注释</em>&#x2F;} <div>1</div> <div>2</div> </div> ) } }</p>
 <p><strong>第四、路由</strong><br>现在官方同时在维护两个版本，2.0和4.0，强烈推荐完整看一遍阮一峰的博客和练一遍官方的14个demo，很好很详细，全过一遍，包教不包会。<br><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTYvMDUvcmVhY3Rfcm91dGVyLmh0bWw/dXRtX3NvdXJjZT10b29sLmx1">阮一峰react-router教程<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3JlYWN0anMvcmVhY3Qtcm91dGVyLXR1dG9yaWFsL3RyZWUvbWFzdGVyL2xlc3NvbnM=">官方router_demo<i class="fa fa-external-link-alt"></i></span></p>
-<p><strong>第五、npm/es6</strong><br>这些预备知识还是需要知道一些的，可以参考我的其他文章或者或者在网上学习下其他人发的帖<br><span class="exturl" data-url="aHR0cDovL2VzNi5ydWFueWlmZW5nLmNvbS8=">ES6入门<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm5wbWpzLmNvbS8=">npm 文档<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>第五、npm&#x2F;es6</strong><br>这些预备知识还是需要知道一些的，可以参考我的其他文章或者或者在网上学习下其他人发的帖<br><span class="exturl" data-url="aHR0cDovL2VzNi5ydWFueWlmZW5nLmNvbS8=">ES6入门<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm5wbWpzLmNvbS8=">npm 文档<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="搭建一个react-app"><a href="#搭建一个react-app" class="headerlink" title="搭建一个react app"></a>搭建一个react app</h3><p>我们使用官方工具 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZhY2Vib29raW5jdWJhdG9yL2NyZWF0ZS1yZWFjdC1hcHA=">create-creat-app<i class="fa fa-external-link-alt"></i></span> 来快速搭建一个app，我们调用豆瓣api，项目地址 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbnNoYW5pL2RlbW9fZG91YmFu">demo_douban<i class="fa fa-external-link-alt"></i></span><br>全局安装<br><code>npm install -g create-react-app</code><br>创建项目<br><code>create-react-app demo_douban</code><br>进入项目<br><code>cd demo_douban</code><br>进入开发模式<br><code>npm start</code><br>src 文件下加一个文件夹叫做config，把豆瓣api的信息都放在里面。<br>conponents 文件下都是我们需要的组件</p>
 <p>这一个项目虽然小，但是可以说明很多问题，足够入门的了。</p>
 
@@ -342,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建一个react-app"><span class="nav-number">1.</span> <span class="nav-text">搭建一个react app</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAreact-app"><span class="nav-number">1.</span> <span class="nav-text">搭建一个react app</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,7 +398,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

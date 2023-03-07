@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -248,20 +248,20 @@
 <li><li id='aa'>abcdef</li></li>
 <li><li id='aaa'>abcdef</li></li>
 <li><script></li>
-<li>var a=document.getElementById(‘a’);</li>
-<li>var name=a.innerHTML;</li>
-<li>a.onclick=function(){</li>
-<li>location.href=”b.html?”+name;</li>
-<li>}</li>
+<li> var a&#x3D;document.getElementById(‘a’);</li>
+<li> var name&#x3D;a.innerHTML;</li>
+<li> a.onclick&#x3D;function(){</li>
+<li>      location.href&#x3D;”b.html?”+name;</li>
+<li> }</li>
 <li></script></li>
 </ol>
 <p>那现在比如点击这几个li的时候，根据点击的不同，改变B 页面的<li>里面的内容，开始写：</p>
 <ol>
 <li><li id="b"></li></li>
 <li><script></li>
-<li>var b=document.getElementById(‘b’);</li>
-<li>var request=window.location.search.substring((window.location.search.indexOf(“?”) + 1), window.location.search.length)</li>
-<li>b.innerHTML=request;</li>
+<li> var b&#x3D;document.getElementById(‘b’);</li>
+<li> var request&#x3D;window.location.search.substring((window.location.search.indexOf(“?”) + 1), window.location.search.length)</li>
+<li> b.innerHTML&#x3D;request;</li>
 <li></script></li>
 </ol>
 
@@ -402,7 +402,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

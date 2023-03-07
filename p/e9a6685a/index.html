@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -25,12 +25,12 @@
     var CONFIG = {"hostname":"blog.leggod.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="首先说明一下以上对象都是指javascript中的，不包含其他语言。pageX&#x2F;pageY: 鼠标相对于整个页面的X&#x2F;Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ offsetX&#x2F;offsetY: 得出的结果跟pageX&#x2F;pageY一样，既然如此，它有什么存在价值？因为：">
+  <meta name="description" content="首先说明一下以上对象都是指javascript中的，不包含其他语言。pageX&#x2F;pageY: 鼠标相对于整个页面的X&#x2F;Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ offsetX&#x2F;offsetY: 得出的结果跟pageX&#x2F;pageY一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="clientX,screenX,pageX,offsetX">
 <meta property="og:url" content="https://blog.leggod.com/p/e9a6685a/index.html">
 <meta property="og:site_name" content="leggod">
-<meta property="og:description" content="首先说明一下以上对象都是指javascript中的，不包含其他语言。pageX&#x2F;pageY: 鼠标相对于整个页面的X&#x2F;Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ offsetX&#x2F;offsetY: 得出的结果跟pageX&#x2F;pageY一样，既然如此，它有什么存在价值？因为：">
+<meta property="og:description" content="首先说明一下以上对象都是指javascript中的，不包含其他语言。pageX&#x2F;pageY: 鼠标相对于整个页面的X&#x2F;Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ offsetX&#x2F;offsetY: 得出的结果跟pageX&#x2F;pageY一">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.leggod.com/wp-content/uploads/2016/10/8-300x169.jpg">
 <meta property="article:published_time" content="2016-11-09T02:42:08.000Z">
@@ -240,9 +240,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="首先说明一下以上对象都是指javascript中的，不包含其他语言。"><a href="#首先说明一下以上对象都是指javascript中的，不包含其他语言。" class="headerlink" title="首先说明一下以上对象都是指javascript中的，不包含其他语言。"></a><img data-src="http://www.leggod.com/wp-content/uploads/2016/10/8-300x169.jpg" alt="8">首先说明一下以上对象都是指javascript中的，不包含其他语言。</h2><p><strong>pageX/pageY</strong>: 鼠标相对于整个页面的X/Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ <strong>offsetX/offsetY</strong>: 得出的结果跟pageX/pageY一样，既然如此，它有什么存在价值？因为： 特别说明：只有IE支持！相当于IE下的pageX,pageY. <strong>screenX/screenY</strong>: 顾名思义，就是鼠标在屏幕上的坐标。screenX,screenY的最大值不会超过你的屏幕分辨率。 特别说明：无 <strong>clientX/clientY</strong>： 事件发生时鼠标在浏览器内容区域的X/Y坐标（不包含滚动条）。浏览器内容区域即浏览器窗口中用来显示网页的可视区域，注意这个可视，也就是说需要拖动滚动条才能看到的区域不算。当你将浏览器窗口缩小时，clientX/clientY的最大值也会缩小，但始终，它们的最大值不会超过你浏览器可视区域。 特别说明：IE下此属性不规范，它们的最小值不是0而是2，也就是说IE下的clientX/clientY与火狐下的始终大2px  网页可见区域宽： document.body.clientWidth;  网页可见区域高： document.body.clientHeight;  网页可见区域宽： document.body.offsetWidth   (包括边线的宽);  网页可见区域高： document.body.offsetHeight  (包括边线的宽);  网页正文全文宽： document.body.scrollWidth;  网页正文全文高： document.body.scrollHeight;  网页被卷去的高： document.body.scrollTop;  网页被卷去的左： document.body.scrollLeft;  网页正文部分上： window.screenTop;  网页正文部分左： window.screenLeft;  屏幕分辨率的高： window.screen.height;  屏幕分辨率的宽： window.screen.width;  屏幕可用工作区高度： window.screen.availHeight;  屏幕可用工作区宽度：window.screen.availWidth;</p>
+        <h2 id="首先说明一下以上对象都是指javascript中的，不包含其他语言。"><a href="#首先说明一下以上对象都是指javascript中的，不包含其他语言。" class="headerlink" title="首先说明一下以上对象都是指javascript中的，不包含其他语言。"></a><img data-src="http://www.leggod.com/wp-content/uploads/2016/10/8-300x169.jpg" alt="8">首先说明一下以上对象都是指javascript中的，不包含其他语言。</h2><p><strong>pageX&#x2F;pageY</strong>: 鼠标相对于整个页面的X&#x2F;Y坐标。注意，整个页面的意思就是你整个网页的全部，比如说网页很宽很长，宽2000px，高3000px，那pageX,pageY的最大值就是它们了。 特别说明：IE不支持！ <strong>offsetX&#x2F;offsetY</strong>: 得出的结果跟pageX&#x2F;pageY一样，既然如此，它有什么存在价值？因为： 特别说明：只有IE支持！相当于IE下的pageX,pageY. <strong>screenX&#x2F;screenY</strong>: 顾名思义，就是鼠标在屏幕上的坐标。screenX,screenY的最大值不会超过你的屏幕分辨率。 特别说明：无 <strong>clientX&#x2F;clientY</strong>： 事件发生时鼠标在浏览器内容区域的X&#x2F;Y坐标（不包含滚动条）。浏览器内容区域即浏览器窗口中用来显示网页的可视区域，注意这个可视，也就是说需要拖动滚动条才能看到的区域不算。当你将浏览器窗口缩小时，clientX&#x2F;clientY的最大值也会缩小，但始终，它们的最大值不会超过你浏览器可视区域。 特别说明：IE下此属性不规范，它们的最小值不是0而是2，也就是说IE下的clientX&#x2F;clientY与火狐下的始终大2px  网页可见区域宽： document.body.clientWidth;  网页可见区域高： document.body.clientHeight;  网页可见区域宽： document.body.offsetWidth   (包括边线的宽);  网页可见区域高： document.body.offsetHeight  (包括边线的宽);  网页正文全文宽： document.body.scrollWidth;  网页正文全文高： document.body.scrollHeight;  网页被卷去的高： document.body.scrollTop;  网页被卷去的左： document.body.scrollLeft;  网页正文部分上： window.screenTop;  网页正文部分左： window.screenLeft;  屏幕分辨率的高： window.screen.height;  屏幕分辨率的宽： window.screen.width;  屏幕可用工作区高度： window.screen.availHeight;  屏幕可用工作区宽度：window.screen.availWidth;</p>
 <hr>
-<p>jQuery: $(window).height(); //浏览器当前窗口可视区域高度 $(document).height(); //浏览器当前窗口文档的高度 $(document.body).height();//浏览器当前窗口文档body的高度 $(document.body).outerHeight(true);//浏览器当前窗口文档body的总高度 包括border padding margin $(window).width(); //浏览器当前窗口可视区域宽度 $(document).width();//浏览器当前窗口文档对象宽度 $(document.body).width();//浏览器当前窗口文档body的宽度 $(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding margin  scrollHeight: 获取对象的滚动高度。    scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离  scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离  scrollWidth:获取对象的滚动宽度  offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度  offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置  offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置    event.clientX 相对文档的水平座标  event.clientY 相对文档的垂直座标  event.offsetX 相对容器的水平坐标  event.offsetY 相对容器的垂直坐标    document.documentElement.scrollTop 垂直方向滚动的值  event.clientX+document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量</p>
+<p>jQuery: $(window).height(); &#x2F;&#x2F;浏览器当前窗口可视区域高度 $(document).height(); &#x2F;&#x2F;浏览器当前窗口文档的高度 $(document.body).height();&#x2F;&#x2F;浏览器当前窗口文档body的高度 $(document.body).outerHeight(true);&#x2F;&#x2F;浏览器当前窗口文档body的总高度 包括border padding margin $(window).width(); &#x2F;&#x2F;浏览器当前窗口可视区域宽度 $(document).width();&#x2F;&#x2F;浏览器当前窗口文档对象宽度 $(document.body).width();&#x2F;&#x2F;浏览器当前窗口文档body的宽度 $(document.body).outerWidth(true));&#x2F;&#x2F;浏览器当前窗口文档body的总宽度 包括border padding margin  scrollHeight: 获取对象的滚动高度。    scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离  scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离  scrollWidth:获取对象的滚动宽度  offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度  offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置  offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置    event.clientX 相对文档的水平座标  event.clientY 相对文档的垂直座标  event.offsetX 相对容器的水平坐标  event.offsetY 相对容器的垂直坐标    document.documentElement.scrollTop 垂直方向滚动的值  event.clientX+document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量</p>
 
     </div>
 
@@ -326,7 +326,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先说明一下以上对象都是指javascript中的，不包含其他语言。"><span class="nav-number">1.</span> <span class="nav-text">首先说明一下以上对象都是指javascript中的，不包含其他语言。</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E8%AF%B4%E6%98%8E%E4%B8%80%E4%B8%8B%E4%BB%A5%E4%B8%8A%E5%AF%B9%E8%B1%A1%E9%83%BD%E6%98%AF%E6%8C%87javascript%E4%B8%AD%E7%9A%84%EF%BC%8C%E4%B8%8D%E5%8C%85%E5%90%AB%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">首先说明一下以上对象都是指javascript中的，不包含其他语言。</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -382,7 +382,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

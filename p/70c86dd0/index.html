@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -32,14 +32,14 @@
 <meta property="og:site_name" content="leggod">
 <meta property="og:description" content="小程序在目前来看，依托着微信平台，有着很好的体验，个人觉得比web App好很多，目前代码包最大已经支持8M了，且类似vue开发风格，前端上手贼快。今天重点可不是介绍怎么做它，曾几何时有没有被其他小程序炫酷的功能震撼心灵，曾几何时有没有想爬一爬源码而不得的冲动，那么无论你出于是像我一样的借鉴参考学习，还是不法臆想，今天我们就来扒一下它。 一、万事开头难准备 node环境、git工具、一部roo">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529924623071&amp;di=ff090604cb87c15d0c489f9e25efdcf1&amp;imgtype=0&amp;src=http%253A%252F%252Ft1.niutuku.com%252F960%252F43%252F43-398503.jpg">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529924623071&di=ff090604cb87c15d0c489f9e25efdcf1&imgtype=0&src=http://t1.niutuku.com/960/43/43-398503.jpg">
 <meta property="article:published_time" content="2018-06-25T09:09:46.000Z">
 <meta property="article:modified_time" content="2022-04-06T01:45:23.123Z">
 <meta property="article:author" content="Xin Shan">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="微信小程序">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529924623071&amp;di=ff090604cb87c15d0c489f9e25efdcf1&amp;imgtype=0&amp;src=http%253A%252F%252Ft1.niutuku.com%252F960%252F43%252F43-398503.jpg">
+<meta name="twitter:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529924623071&di=ff090604cb87c15d0c489f9e25efdcf1&imgtype=0&src=http://t1.niutuku.com/960/43/43-398503.jpg">
 
 <link rel="canonical" href="https://blog.leggod.com/p/70c86dd0/">
 
@@ -241,11 +241,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img data-src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1529924623071&amp;di=ff090604cb87c15d0c489f9e25efdcf1&amp;imgtype=0&amp;src=http%3A%2F%2Ft1.niutuku.com%2F960%2F43%2F43-398503.jpg" alt=""></p>
+        <p><img data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529924623071&di=ff090604cb87c15d0c489f9e25efdcf1&imgtype=0&src=http://t1.niutuku.com/960/43/43-398503.jpg"></p>
 <hr>
 <p>小程序在目前来看，依托着微信平台，有着很好的体验，个人觉得比web App好很多，目前代码包最大已经支持8M了，且类似vue开发风格，前端上手贼快。今天重点可不是介绍怎么做它，曾几何时有没有被其他小程序炫酷的功能震撼心灵，曾几何时有没有想爬一爬源码而不得的冲动，那么无论你出于是像我一样的借鉴参考学习，还是不法臆想，今天我们就来扒一下它。</p>
 <h4 id="一、万事开头难"><a href="#一、万事开头难" class="headerlink" title="一、万事开头难"></a>一、万事开头难</h4><p>准备 <code>node环境</code>、<code>git工具</code>、一部<code>root</code>了的安卓手机或者模拟器</p>
-<h4 id="二、操作流程"><a href="#二、操作流程" class="headerlink" title="二、操作流程"></a>二、操作流程</h4><p>I、使用gitgit clone <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3F3ZXJ0eTQ3MjEyMy93eGFwcFVucGFja2VyLmdpdA==">https://github.com/qwerty472123/wxappUnpacker.git<i class="fa fa-external-link-alt"></i></span> II、在手机的微信中，随便打开一个小程序，记下你打开的当前是时间是几点<br>III、用re管理器，进入到<code>/data/data/com.tencent.mm/MicroMsg//appbrand/pkg/</code>目录，并通过时间找到刚才的打开的小程序，就是一个后缀名为<code>.wxapkg</code>的文件，并放到d盘<br>IV、进入到刚才git的项目中 //cd到项目目录，或者傻瓜式点进去 cd wxappUnpacker //安装依赖 npm install //特别的再安装如下几个 npm install esprima -g npm install css-tree -g npm install cssbeautify -g npm install vm2 -g npm install uglify-es -g npm install js-beautify -g //最后再执行 node wuWxapkg.js &lt;files…&gt; //files就是你的.wxapkg的文件路径 例如我git到的是d盘，那我就输入<code>node .\wuWxapkg.js D:\_-317246217_18.wxapkg</code>ok,你会在.wxapkg的目录下发现一个文件夹了，直接用微信开发者工具进入，就可以看到项目效果了，然后你可以继续你的非法臆想了。<code>notice:</code>记得打开不检验合法域名的选项</p>
+<h4 id="二、操作流程"><a href="#二、操作流程" class="headerlink" title="二、操作流程"></a>二、操作流程</h4><p>I、使用gitgit clone <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3F3ZXJ0eTQ3MjEyMy93eGFwcFVucGFja2VyLmdpdA==">https://github.com/qwerty472123/wxappUnpacker.git<i class="fa fa-external-link-alt"></i></span> II、在手机的微信中，随便打开一个小程序，记下你打开的当前是时间是几点<br>III、用re管理器，进入到<code>/data/data/com.tencent.mm/MicroMsg//appbrand/pkg/</code>目录，并通过时间找到刚才的打开的小程序，就是一个后缀名为<code>.wxapkg</code>的文件，并放到d盘<br>IV、进入到刚才git的项目中 &#x2F;&#x2F;cd到项目目录，或者傻瓜式点进去 cd wxappUnpacker &#x2F;&#x2F;安装依赖 npm install &#x2F;&#x2F;特别的再安装如下几个 npm install esprima -g npm install css-tree -g npm install cssbeautify -g npm install vm2 -g npm install uglify-es -g npm install js-beautify -g &#x2F;&#x2F;最后再执行 node wuWxapkg.js &lt;files…&gt; &#x2F;&#x2F;files就是你的.wxapkg的文件路径 例如我git到的是d盘，那我就输入<code>node .\wuWxapkg.js D:\_-317246217_18.wxapkg</code>ok,你会在.wxapkg的目录下发现一个文件夹了，直接用微信开发者工具进入，就可以看到项目效果了，然后你可以继续你的非法臆想了。<code>notice:</code>记得打开不检验合法域名的选项</p>
 <p>你以为最后一段是结束语吗？错了，接下来，你们肯定会遇到一些莫名奇妙的问题，比如执行 <code>node wuWxapkg.js ...</code> 失败的问题，细心细心细心，你肯定有什么依赖没装，仔细检查，如果都装了看看反编译的<code>.wxapkg</code>目录有没有错，肯定有人不服，什么都对，但是<code>node wuWxapkg.js ...</code> 编译出来的文件和源小程序项目结构等完全不一样。对，这就是为什么有这一段的重点的重点，常规的开发我们确实可以拿到<code>.wxapkg</code>来反编译，但是如果用<code>wepy</code>，<code>mpvue</code>做的小程序就不行了。当年我也是超级脑残的认为如此简单的开发，为何要复杂的用<code>wepy等</code>，漫漫的人生路就是这么奇妙，岁月会来告诉，孩子，为了装X。没错附带一点点安全就是这么重要。历史告诉我们不要给坏人一点点的可乘之机</p>
 
     </div>
@@ -331,7 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、万事开头难"><span class="nav-number">1.</span> <span class="nav-text">一、万事开头难</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、操作流程"><span class="nav-number">2.</span> <span class="nav-text">二、操作流程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%87%E4%BA%8B%E5%BC%80%E5%A4%B4%E9%9A%BE"><span class="nav-number">1.</span> <span class="nav-text">一、万事开头难</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">二、操作流程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -387,7 +387,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

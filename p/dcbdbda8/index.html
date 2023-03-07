@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -240,21 +240,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/04/cvety-oduvanchiki-rasteniya-36431-1024x640.jpg" alt=""></p>
+        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/04/cvety-oduvanchiki-rasteniya-36431-1024x640.jpg"></p>
 <hr>
 <p>孩童们，还记得当年玩CSS的时候，特别是CSS3的时候，那真是，大伟哥都心痛得无法呼吸。</p>
 <p>周末玩了下SASS，怎么说呢，更有趣吧。我不确定这篇文章会教会些什么技术，那也不是我的目的。更多我写东西，是想表达下在自己在接触些东西的时候，是怎么想的怎么做的，是一些思路、一些理解、一些分享。记性不好，但文字可以使我迅速的想起来。</p>
 <p>SASS呢，由Ruby编码，就是预编译的CSS，直白点就是使用SASS之后会编译成CSS，和传统的CSS在效果上一点区别都没有。所以我们是可以很友好的体验的。另外对于为什么要用SASS，而不直接用css，其实网上说法是SASS可以减少css的复用。记得当年写页面，css真的很多很多重复的，一个页面大几百行。使用SASS是需要安装Ruby的，但是学学玩玩嘛，推荐上<span class="exturl" data-url="aHR0cDovL3d3dy5zYXNzbWVpc3Rlci5jb20v">sassmeister<i class="fa fa-external-link-alt"></i></span>(记得挂SSR)，直接就可以体验到了。所以我就不写什么安装、编译风格之类的随处都可以百度到的傻瓜操作。</p>
-<p><strong>编写第一个<code>SASS</code>样式和<code>SCSS</code>样式</strong>：//SASS写法： .myClass :color red :background-color blue //SCSS写法 .myClass { color: red; background-color: blue; } //SCSS是SASS的一种语法，完美支持CSS3 //使用compressed风格编译出来，压缩风格，所有的css样式都再一行上 .myClass{color:red;background-color:blue}</p>
-<p><strong>变量</strong>：$var:2px;$top:left; .myClass { margin : $var; //属性值可直接用 padding - #{ $top } : $var; //属性要用到#{} text-indent : $var*2; //可运算 } //编译之后 .myClass{margin:2px;padding-left:2px;text-indent:4px}</p>
-<p><strong>嵌套</strong>：/<em>选择器嵌套：</em>/ $color:red; div{ span{ color:$color; } } //编译之后 div span{color:red} /<em>属性嵌套</em>/ $px:10px; div{ margin:{ //一定要加上 : left:$px/2; } } //编译之后 div{margin-left:5px} /<em>嵌套使用伪类</em>/ $px:10px; div{ &amp;:hover{ //&amp; 表示父元素 margin:{ left:$px/2; } } } //编译后 div:hover{margin-left:5px}</p>
-<p><strong>注释</strong>：/<em>分两种单行和多行</em>/ ‘ // ’ 单行 ‘ /*<em>/ ’ 多行,编译之后会显示再css中，压缩模式不会保留 ‘ /</em>！ */ ’ 多行，编译之后会显示再css中，压缩模式也会保留</p>
-<p><strong>继承</strong>：.error { border: 1px #f00; background-color: #fdd; } .seriousError { @extend .error; //@extend 继承error的样式 border-width: 3px; } //编译后 .error, .seriousError { border: 1px #f00; background-color: #fdd; } .seriousError { border-width: 3px; }</p>
-<p><strong>mixin</strong>：//需要注意mixin的顺序，从上往下执行； @mixin clearfix { display: inline-block; &amp;:after { //&amp;表示父级 content: “.”; display: block; height: 0; clear: both; visibility: hidden; } html &amp; { height: 1px } //&amp;表示父级 } .page-title { padding: 4px; margin-top: 10px; @include clearfix; //@include 可以调用@mixin } //编译之后 .page-title { padding: 4px; margin-top: 10px; display: inline-block; } .page-title:after { content: “.”; display: block; height: 0; clear: both; visibility: hidden; } html .page-title { height: 1px; }</p>
-<p><strong>颜色函数</strong>：.title { color:lighten(red, 10%); //HSL 函数，色调高亮什么的。最后一个参数是透明度 color:darken(#fff, 20); //HSL 函数，头疼。。 color:rgb(24,255,255); //标准的RGB颜色，把10进制转成16进制。我还是用吸管吸，头疼。 background: rgba(0,0,0, 0.5); } //编译后 .title { color: #ff3333; color: #cccccc; color: #18ffff; background: rgba(0, 0, 0, 0.5); }</p>
-<p><strong>插入文件</strong>：//如果插入scss @import “path/filename.scss”; //如果插入css文件 @import “style.css”;</p>
-<p><strong>高级语法</strong>(玩过js的再看这个那都不是事)：1.条件语句 $type: a; p { @if $type == d { color: blue; } @else if $type == b { color: red; } @else if $type == c { color: green; } @else { color: black; } } //编译之后 p{color:black} 2.循环 //for循环 @for $i from 1 through 3 { .class#{$i} { width: 2em * $i; } } //编译后 .class1{width:2em}.class2{width:4em}.class3{width:6em} 3.@each 循环 和for 有点像 @each $n in a,b,c,d{ .#{ $n }{ background-image:url(‘image/#{$n}’); } } //编译后 .a{background-image:url(“image/a”)}.b{background-image:url(“image/b”)}.c{background-image:url(“image/c”)}.d{background-image:url(“image/d”)} 4.@while循环 $n:6; @while $n&gt;2{ .class#{$n}{ color:blue; }; $n:$n - 1; } //编译后 .class6{color:blue}.class5{color:blue}.class4{color:blue}.class3{color:blue} 5.@function函数 @function fn($n){ //声明函数 @return $n //返回值 } .class{ color:fn(red); //调用fn } //编译后 .class{color:red}</p>
-<p>其实我发现，SASS相对于JS这些那是非常简单的。声明变量用<code>$</code>；关键字前面加上<code>@</code>；<code>&amp;</code>表示父选择器；注释一般都通用，再就是注意下<code>#{}</code>怎么用；一些计算、判断等语法，<code>SASS</code>就够了</p>
+<p><strong>编写第一个<code>SASS</code>样式和<code>SCSS</code>样式</strong>：&#x2F;&#x2F;SASS写法： .myClass :color red :background-color blue &#x2F;&#x2F;SCSS写法 .myClass { color: red; background-color: blue; } &#x2F;&#x2F;SCSS是SASS的一种语法，完美支持CSS3 &#x2F;&#x2F;使用compressed风格编译出来，压缩风格，所有的css样式都再一行上 .myClass{color:red;background-color:blue}</p>
+<p><strong>变量</strong>：$var:2px;$top:left; .myClass { margin : $var; &#x2F;&#x2F;属性值可直接用 padding - #{ $top } : $var; &#x2F;&#x2F;属性要用到#{} text-indent : $var*2; &#x2F;&#x2F;可运算 } &#x2F;&#x2F;编译之后 .myClass{margin:2px;padding-left:2px;text-indent:4px}</p>
+<p><strong>嵌套</strong>：&#x2F;<em>选择器嵌套：</em>&#x2F; $color:red; div{ span{ color:$color; } } &#x2F;&#x2F;编译之后 div span{color:red} &#x2F;<em>属性嵌套</em>&#x2F; $px:10px; div{ margin:{ &#x2F;&#x2F;一定要加上 : left:$px&#x2F;2; } } &#x2F;&#x2F;编译之后 div{margin-left:5px} &#x2F;<em>嵌套使用伪类</em>&#x2F; $px:10px; div{ &amp;:hover{ &#x2F;&#x2F;&amp; 表示父元素 margin:{ left:$px&#x2F;2; } } } &#x2F;&#x2F;编译后 div:hover{margin-left:5px}</p>
+<p><strong>注释</strong>：&#x2F;<em>分两种单行和多行</em>&#x2F; ‘ &#x2F;&#x2F; ’ 单行 ‘ &#x2F;**&#x2F; ’ 多行,编译之后会显示再css中，压缩模式不会保留 ‘ &#x2F;*！ *&#x2F; ’ 多行，编译之后会显示再css中，压缩模式也会保留</p>
+<p><strong>继承</strong>：.error { border: 1px #f00; background-color: #fdd; } .seriousError { @extend .error; &#x2F;&#x2F;@extend 继承error的样式 border-width: 3px; } &#x2F;&#x2F;编译后 .error, .seriousError { border: 1px #f00; background-color: #fdd; } .seriousError { border-width: 3px; }</p>
+<p><strong>mixin</strong>：&#x2F;&#x2F;需要注意mixin的顺序，从上往下执行； @mixin clearfix { display: inline-block; &amp;:after { &#x2F;&#x2F;&amp;表示父级 content: “.”; display: block; height: 0; clear: both; visibility: hidden; } html &amp; { height: 1px } &#x2F;&#x2F;&amp;表示父级 } .page-title { padding: 4px; margin-top: 10px; @include clearfix; &#x2F;&#x2F;@include 可以调用@mixin } &#x2F;&#x2F;编译之后 .page-title { padding: 4px; margin-top: 10px; display: inline-block; } .page-title:after { content: “.”; display: block; height: 0; clear: both; visibility: hidden; } html .page-title { height: 1px; }</p>
+<p><strong>颜色函数</strong>：.title { color:lighten(red, 10%); &#x2F;&#x2F;HSL 函数，色调高亮什么的。最后一个参数是透明度 color:darken(#fff, 20); &#x2F;&#x2F;HSL 函数，头疼。。 color:rgb(24,255,255); &#x2F;&#x2F;标准的RGB颜色，把10进制转成16进制。我还是用吸管吸，头疼。 background: rgba(0,0,0, 0.5); } &#x2F;&#x2F;编译后 .title { color: #ff3333; color: #cccccc; color: #18ffff; background: rgba(0, 0, 0, 0.5); }</p>
+<p><strong>插入文件</strong>：&#x2F;&#x2F;如果插入scss @import “path&#x2F;filename.scss”; &#x2F;&#x2F;如果插入css文件 @import “style.css”;</p>
+<p><strong>高级语法</strong>(玩过js的再看这个那都不是事)：1.条件语句 $type: a; p { @if $type &#x3D;&#x3D; d { color: blue; } @else if $type &#x3D;&#x3D; b { color: red; } @else if $type &#x3D;&#x3D; c { color: green; } @else { color: black; } } &#x2F;&#x2F;编译之后 p{color:black} 2.循环 &#x2F;&#x2F;for循环 @for $i from 1 through 3 { .class#{$i} { width: 2em * $i; } } &#x2F;&#x2F;编译后 .class1{width:2em}.class2{width:4em}.class3{width:6em} 3.@each 循环 和for 有点像 @each $n in a,b,c,d{ .#{ $n }{ background-image:url(‘image&#x2F;#{$n}’); } } &#x2F;&#x2F;编译后 .a{background-image:url(“image&#x2F;a”)}.b{background-image:url(“image&#x2F;b”)}.c{background-image:url(“image&#x2F;c”)}.d{background-image:url(“image&#x2F;d”)} 4.@while循环 $n:6; @while $n&gt;2{ .class#{$n}{ color:blue; }; $n:$n - 1; } &#x2F;&#x2F;编译后 .class6{color:blue}.class5{color:blue}.class4{color:blue}.class3{color:blue} 5.@function函数 @function fn($n){ &#x2F;&#x2F;声明函数 @return $n &#x2F;&#x2F;返回值 } .class{ color:fn(red); &#x2F;&#x2F;调用fn } &#x2F;&#x2F;编译后 .class{color:red}</p>
+<p>其实我发现，SASS相对于JS这些那是非常简单的。声明变量用<code>$</code>；关键字前面加上<code>@</code>；<code>&amp;</code>表示父选择器；注释一般都通用，再就是注意下<code>#&#123;&#125;</code>怎么用；一些计算、判断等语法，<code>SASS</code>就够了</p>
 
     </div>
 
@@ -393,7 +393,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

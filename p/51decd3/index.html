@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -256,31 +256,38 @@
 <li>查看运行的 docker 容器列表 <code>docker ps</code></li>
 <li>运行 docker 容器 <code>docker run</code></li>
 </ul>
-<h5 id="安装-nginx-镜像及启动"><a href="#安装-nginx-镜像及启动" class="headerlink" title="安装 nginx 镜像及启动"></a>安装 nginx 镜像及启动</h5><p>  假设我们的环境已经ok了，那么我们只需要<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker pull linux</span><br></pre></td></tr></table></figure></p>
+<h5 id="安装-nginx-镜像及启动"><a href="#安装-nginx-镜像及启动" class="headerlink" title="安装 nginx 镜像及启动"></a>安装 nginx 镜像及启动</h5><p>  假设我们的环境已经ok了，那么我们只需要</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull linux</span><br></pre></td></tr></table></figure>
 <ul>
-<li>基本运行<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 如果我们不把容器端口映射到本地，就算容器跑起来，你也访问不到。</span><br><span class="line">$ docker run -p <span class="string">[本地端口]</span>:<span class="string">[容器端口]</span> <span class="string">[镜像]</span></span><br></pre></td></tr></table></figure></li>
-<li>后台运行<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//后台运行的时候我们可以做其他的事情</span></span><br><span class="line">$ docker <span class="built_in">run</span> -d ...</span><br></pre></td></tr></table></figure></li>
-<li>交互运行并进入命令行模式<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交互运行的时候，我们可以进入到容器，干一些事情，比如配置 nginx ，</span></span><br><span class="line">$ docker run -t -<span class="selector-tag">i</span> container /bin/bash</span><br></pre></td></tr></table></figure>
-</li>
+<li>基本运行<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 如果我们不把容器端口映射到本地，就算容器跑起来，你也访问不到。</span><br><span class="line">$ docker run -p [本地端口]:[容器端口] [镜像]</span><br></pre></td></tr></table></figure></li>
+<li>后台运行<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//后台运行的时候我们可以做其他的事情</span><br><span class="line">$ docker run -d ...</span><br></pre></td></tr></table></figure></li>
+<li>交互运行并进入命令行模式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 交互运行的时候，我们可以进入到容器，干一些事情，比如配置 nginx ，</span><br><span class="line">$ docker run -t -i container /bin/bash</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 <h5 id="实例运行"><a href="#实例运行" class="headerlink" title="实例运行"></a>实例运行</h5><ul>
 <li>在后台运行一次 nginx</li>
 </ul>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="builtin-name">run</span> -d nginx  ||  docker <span class="builtin-name">run</span> -d 53f3fd8007f7 (ps: image id,推荐这种写法)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d nginx  ||  docker run -d 53f3fd8007f7 (ps: image id,推荐这种写法)</span><br></pre></td></tr></table></figure>
+
 <p>若有一串字母数字返回，那是container id ,说明容器已经跑起来了，再使用 <code>docker ps</code> 查看一下运行中容器，恭喜，可使用 <code>docker stop [container id]</code> 关闭容器</p>
 <ul>
 <li>启动nginx 并进入命令行</li>
 </ul>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进入到 nginx 容器，并打开命令行</span></span><br><span class="line">$ docker <span class="built_in">run</span> -it nginx /bin/bash</span><br><span class="line"><span class="comment">// 同时输入 nginx -h 查看 nginx 的位置，</span></span><br><span class="line">我能查看到的信息显示，当前 nginx 的配置文件地址在:</span><br><span class="line"><span class="string">"/etc/nginx/conf.d"</span></span><br><span class="line">location 地址是:</span><br><span class="line"><span class="string">"/usr/share/nginx/html"</span></span><br></pre></td></tr></table></figure>
-<p>如果需要更改 nginx 配置，或者把要运行的项目放入到 nginx/html 目录 ，可以使用 拷贝命令<br>例如：把 nginx config 复制到本地的/tmp 中<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker cp  <span class="number">96</span><span class="string">f7f14e99ab:</span><span class="regexp">/etc/</span>nginx<span class="regexp">/conf.d/</span><span class="keyword">default</span>.conf <span class="regexp">/tmp/</span></span><br></pre></td></tr></table></figure><br>至此我们可以使用 <code>cp</code> 把我们要运行的 vue 打包文件 <code>cp</code> 到 <code>/usr/share/nginx/html/</code>，并把 nginx 的 80端口映射到本地的 8080 。大功告成了？确实算是。但是对于我们开发来说太麻烦了，docker 有一项功能，叫数据卷，通俗讲可以实现 vue 打包后的 dist 目录直接映射到 容器 nginx 的 <code>/usr/share/nginx/html/</code> 中。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>docker -v 本地目录<span class="symbol">:</span>容器目录</span><br></pre></td></tr></table></figure></p>
-<h5 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h5><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p <span class="number">81</span>:<span class="number">80</span> -v <span class="regexp">/usr/</span>local<span class="regexp">/var/</span><span class="string">www:</span><span class="regexp">/usr/</span>share<span class="regexp">/nginx/</span>html <span class="number">53</span>f3fd8007f7</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 进入到 nginx 容器，并打开命令行</span><br><span class="line">$ docker run -it nginx /bin/bash</span><br><span class="line">// 同时输入 nginx -h 查看 nginx 的位置，</span><br><span class="line">我能查看到的信息显示，当前 nginx 的配置文件地址在:</span><br><span class="line">&quot;/etc/nginx/conf.d&quot;</span><br><span class="line">location 地址是:</span><br><span class="line">&quot;/usr/share/nginx/html&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果需要更改 nginx 配置，或者把要运行的项目放入到 nginx&#x2F;html 目录 ，可以使用 拷贝命令<br>例如：把 nginx config 复制到本地的&#x2F;tmp 中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker cp  96f7f14e99ab:/etc/nginx/conf.d/default.conf /tmp/</span><br></pre></td></tr></table></figure>
+<p>至此我们可以使用 <code>cp</code> 把我们要运行的 vue 打包文件 <code>cp</code> 到 <code>/usr/share/nginx/html/</code>，并把 nginx 的 80端口映射到本地的 8080 。大功告成了？确实算是。但是对于我们开发来说太麻烦了，docker 有一项功能，叫数据卷，通俗讲可以实现 vue 打包后的 dist 目录直接映射到 容器 nginx 的 <code>/usr/share/nginx/html/</code> 中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v 本地目录:容器目录</span><br></pre></td></tr></table></figure>
+
+<h5 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 81:80 -v /usr/local/var/www:/usr/share/nginx/html 53f3fd8007f7</span><br></pre></td></tr></table></figure>
 <p>命令说明：</p>
 <ul>
 <li><code>-p 81:80</code> 把容器的80端口挂在到本地的81</li>
 <li><code>-v /usr/local/var/www:/usr/share/nginx/html</code> 把自己创建的www目录挂载到容html</li>
 </ul>
 <h5 id="此外"><a href="#此外" class="headerlink" title="此外"></a>此外</h5><p>在运行容器后，我们还可以使用 exec 进入到容器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker <span class="built_in">exec</span> -it [CONTAINER ID] /bin/bash</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker exec -it [CONTAINER ID] /bin/bash</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>祝，玩得开心</p>
 </blockquote>
@@ -367,7 +374,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#写在开头"><span class="nav-number">1.</span> <span class="nav-text">写在开头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-常用命令"><span class="nav-number">3.</span> <span class="nav-text">docker 常用命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装-nginx-镜像及启动"><span class="nav-number">4.</span> <span class="nav-text">安装 nginx 镜像及启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实例运行"><span class="nav-number">5.</span> <span class="nav-text">实例运行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据卷"><span class="nav-number">6.</span> <span class="nav-text">数据卷</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#此外"><span class="nav-number">7.</span> <span class="nav-text">此外</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%BC%80%E5%A4%B4"><span class="nav-number">1.</span> <span class="nav-text">写在开头</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">docker 常用命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-nginx-%E9%95%9C%E5%83%8F%E5%8F%8A%E5%90%AF%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">安装 nginx 镜像及启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E8%BF%90%E8%A1%8C"><span class="nav-number">5.</span> <span class="nav-text">实例运行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">6.</span> <span class="nav-text">数据卷</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%A4%E5%A4%96"><span class="nav-number">7.</span> <span class="nav-text">此外</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -423,7 +430,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

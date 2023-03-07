@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -243,7 +243,7 @@
 
       
         <h3 id="一、什么是运营商劫持"><a href="#一、什么是运营商劫持" class="headerlink" title="一、什么是运营商劫持"></a>一、什么是运营商劫持</h3><h4 id="什么是运营商："><a href="#什么是运营商：" class="headerlink" title="什么是运营商："></a>什么是运营商：</h4><p>运营商是指那些提供宽带服务的ISP，包括三大运营商中国电信、中国移动、中国联通，还有一些小运营商，比如长城宽带、歌华有线宽带。运营商提供最最基础的网络服务，掌握着通往用户物理大门的钥匙，目前运营商劫持很普遍。（以前https其实就可以挡住很多了，但是现在的https劫持层出不穷，特别是app上面，而你的站点pv太大，劫持是一定的） 举个劫持的栗子：</p>
-<p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/167114e508c367b9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/167114e508c367b9?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
 <h4 id="劫持方式："><a href="#劫持方式：" class="headerlink" title="劫持方式："></a>劫持方式：</h4><p>运营商比较常见的作恶方式有三种，分别是DNS劫持、HTTP劫持、HTTPS劫持： DNS劫持：这种劫持会把你重新定位到其它网站，我们所熟悉的钓鱼网站就是这个原理。但是因为它的违法性，现在被严厉的监管起来，已经很少见。 HTTP劫持：虽然DNS劫持已经被监管了起来，但是还有HTTP劫持啊！你DNS解析的域名的IP地址不变，当运营商发现你的是HTTP请求时，就会在里面插入一些奇奇怪怪的广告（比如一些banner、浮标、更有甚把你你的商品位给劫持了 WTF…）并且这种现象十分常见，不信你可以试着随便打开一个网页，仔细看看你就会发现一些小尾巴，这就是被HTTP劫持了。 HTTPS劫持：安全的超文本传输协议，数据加密这也能劫持？答案是肯定的！该劫持方式有两种：</p>
 <ol>
 <li>伪造证书，通过病毒或者其他方式将伪造证书的根证书安装在用户系统中（较少）</li>
@@ -251,7 +251,7 @@
 </ol>
 <p>备注：使用本篇的代码一定会让你查到HTTPS劫持的（前提是使用了https）</p>
 <h3 id="二、防运营商劫持"><a href="#二、防运营商劫持" class="headerlink" title="二、防运营商劫持"></a>二、防运营商劫持</h3><p>准确的来说是防script、iframe注入型劫持，95%以上是这种劫持方式，因为DNS劫持被严管了。</p>
-<p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/16710f4290d3a04f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/16710f4290d3a04f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
 <p>运营商是如何劫持的，网上有很多资料，这里不多逼逼</p>
 <p>下面是防劫持代码：</p>
 <pre><code>&lt;!DOCTYPE html&gt;
@@ -260,7 +260,7 @@
   &lt;meta charset=&quot;utf-8&quot; /&gt;
   &lt;title&gt;防劫持代码测试&lt;/title&gt;
   &lt;script&gt;
-    console.log(&apos;发生劫持，初始化就直接置顶的流氓行为，暂无法防御，但可以通过埋点记录LOG，向工信部投诉！!&apos;);
+    console.log(&#39;发生劫持，初始化就直接置顶的流氓行为，暂无法防御，但可以通过埋点记录LOG，向工信部投诉！!&#39;);
   &lt;/script&gt;
   &lt;!-- 防劫持 --&gt;
   &lt;script shendun-eddy&gt;
@@ -268,77 +268,77 @@
      * @note 防劫持代码
      * @key MutationObserver 提供了监视对DOM树所做更改的能力
      */
-    (function() {
-      var srcFilterTags = [&apos;script&apos;, &apos;iframe&apos;];
+    (function() &#123;
+      var srcFilterTags = [&#39;script&#39;, &#39;iframe&#39;];
       // 域名白名单 可以加多个
-      var whiteList = [&apos;zeptojs.com&apos;];
+      var whiteList = [&#39;zeptojs.com&#39;];
       var whiteListReg = [];
 
       // 正则匹配
-      whiteList.forEach(function(wl) {
-        var wlReg = new RegExp(&apos;/.+?\/\/&apos; + wl + &apos;|\/\/&apos; + wl + &apos;|.+?\.&apos; + wl + &apos;|^&apos; + wl);
+      whiteList.forEach(function(wl) &#123;
+        var wlReg = new RegExp(&#39;/.+?\/\/&#39; + wl + &#39;|\/\/&#39; + wl + &#39;|.+?\.&#39; + wl + &#39;|^&#39; + wl);
         whiteListReg.push(wlReg);
-      });
+      &#125;);
       // 白名单助手
-      var inWhileList = function(addedNode) {
+      var inWhileList = function(addedNode) &#123;
         // shendun-eddy 是script的白名单标签
-        if (addedNode.src === &apos;&apos; &amp;&amp; addedNode.getAttribute(&apos;shendun-eddy&apos;) !== null) {
+        if (addedNode.src === &#39;&#39; &amp;&amp; addedNode.getAttribute(&#39;shendun-eddy&#39;) !== null) &#123;
           return true;
-        }
+        &#125;
 
         var isInWhiteList = false;
 
-        whiteListReg.forEach(function(wlReg) {
-          if (wlReg.test(addedNode.src)) {
+        whiteListReg.forEach(function(wlReg) &#123;
+          if (wlReg.test(addedNode.src)) &#123;
             isInWhiteList = true;
             return false;
-          }
-        });
+          &#125;
+        &#125;);
 
         return isInWhiteList;
-      };
+      &#125;;
 
       // dom观察器
-      var mutationHandler = function(records) {
-        records.forEach(function(record) {
-          Array.prototype.slice.call(record.addedNodes).forEach(function(addedNode) {
-            srcFilterTags.forEach(function(tagName) {
+      var mutationHandler = function(records) &#123;
+        records.forEach(function(record) &#123;
+          Array.prototype.slice.call(record.addedNodes).forEach(function(addedNode) &#123;
+            srcFilterTags.forEach(function(tagName) &#123;
               // 标签匹配 白名单匹配
-              if (addedNode.tagName === tagName.toUpperCase() &amp;&amp; !inWhileList(addedNode)) {
+              if (addedNode.tagName === tagName.toUpperCase() &amp;&amp; !inWhileList(addedNode)) &#123;
                 addedNode.remove();
-              };
-            });
-          });
-        })
-      };
+              &#125;;
+            &#125;);
+          &#125;);
+        &#125;)
+      &#125;;
 
       // 核心 - MutationObserver 提供了监视对DOM树所做更改的能力
       // 优点 - 动态监听是否有非法的 iframe 和 script 代码
       // 缺点 - 无法查找头部直接插入的代码
       var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver,
         observeMutationSupport = !!MutationObserver;
-      var html = document.getElementsByTagName(&apos;html&apos;)[0];
+      var html = document.getElementsByTagName(&#39;html&#39;)[0];
 
-      if (observeMutationSupport) {
-        new MutationObserver(mutationHandler).observe(html, {
-          &apos;childList&apos;: true,
-          &apos;subtree&apos;: true
-        });
-      }
+      if (observeMutationSupport) &#123;
+        new MutationObserver(mutationHandler).observe(html, &#123;
+          &#39;childList&#39;: true,
+          &#39;subtree&#39;: true
+        &#125;);
+      &#125;
 
       // 唯独直接加载的不能remove掉，异步加载的都能remove掉！！
       // ***  记录头部的script，通知工信部 ***
-      var eleList = document.querySelectorAll(&apos;script&apos;);
+      var eleList = document.querySelectorAll(&#39;script&#39;);
       var len = eleList.length;
-      for (var i = 0; i &lt; len; i++) {
+      for (var i = 0; i &lt; len; i++) &#123;
         // 遍历操作
-        if (!inWhileList(eleList[i])) {
+        if (!inWhileList(eleList[i])) &#123;
           // do sth 这里的删除虽然已经晚了，因为头部同步JS已被执行，删除操作意义不大，但可以统计被劫持的代码是什么，记录好LOG 通知工信部
           // sendLog
           eleList[i].remove();
-        }
-      }
-    })();
+        &#125;
+      &#125;
+    &#125;)();
   &lt;/script&gt;
   &lt;script&gt;console.log(&quot;劫持1&quot;);&lt;/script&gt;
 &lt;/head&gt;
@@ -352,14 +352,15 @@
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;script src=&quot;http://zeptojs.com/zepto.min.js&quot;&gt;&lt;/script&gt;
-  &lt;!-- 这里执行了 console.log(&apos;哎哟，我来劫持你了...&apos;); 虽然访问了这个script, 但被remove了不会执行--&gt;
+  &lt;!-- 这里执行了 console.log(&#39;哎哟，我来劫持你了...&#39;); 虽然访问了这个script, 但被remove了不会执行--&gt;
   &lt;script src=&quot;http://nansenzsl.coding.me/CBS/shendun_test.js&quot;&gt;&lt;/script&gt;
   &lt;script&gt;console.log(&quot;劫持....&quot;);&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>加入运营商劫持代码后，不在白名单和安全标签（shendun-eddy）内的script或者iframe都会被remove掉。</p>
-<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><p>MutationObserver()创建并返回一个新的 MutationObserver 它会在指定的DOM发生变化时被调用。 具体参数和用法传送门：<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5pbT90YXJnZXQ9aHR0cHMlM0ElMkYlMkZkZXZlbG9wZXIubW96aWxsYS5vcmclMkZ6aC1DTiUyRmRvY3MlMkZXZWIlMkZBUEklMkZNdXRhdGlvbk9ic2VydmVy">developer.mozilla.org/zh-CN/docs/…<i class="fa fa-external-link-alt"></i></span></p>
-<h4 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h4><p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/16711479d2e61b77?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+</code></pre>
+<p>加入运营商劫持代码后，不在白名单和安全标签（shendun-eddy）内的script或者iframe都会被remove掉。</p>
+<h4 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h4><p>MutationObserver()创建并返回一个新的 MutationObserver 它会在指定的DOM发生变化时被调用。 具体参数和用法传送门：<span class="exturl" data-url="aHR0cHM6Ly9saW5rLmp1ZWppbi5pbS8/dGFyZ2V0PWh0dHBzOi8vZGV2ZWxvcGVyLm1vemlsbGEub3JnL3poLUNOL2RvY3MvV2ViL0FQSS9NdXRhdGlvbk9ic2VydmVy">developer.mozilla.org&#x2F;zh-CN&#x2F;docs&#x2F;…<i class="fa fa-external-link-alt"></i></span></p>
+<h4 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h4><p><img data-src="https://user-gold-cdn.xitu.io/2018/11/14/16711479d2e61b77?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
 <p>所有浏览器的兼容性是92.79%，手机端的兼容性更高，代码中加了保护所以放心使用吧！</p>
 <h3 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h3><p>目前运营商劫持率大约是3% ~ 25%，它们无处不在。 为了还用户一个干净安全的浏览环境，我们需要做好预防措施</p>
 <ol>
@@ -450,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、什么是运营商劫持"><span class="nav-number">1.</span> <span class="nav-text">一、什么是运营商劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是运营商："><span class="nav-number">1.1.</span> <span class="nav-text">什么是运营商：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#劫持方式："><span class="nav-number">1.2.</span> <span class="nav-text">劫持方式：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、防运营商劫持"><span class="nav-number">2.</span> <span class="nav-text">二、防运营商劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心功能"><span class="nav-number">2.1.</span> <span class="nav-text">核心功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#兼容性"><span class="nav-number">2.2.</span> <span class="nav-text">兼容性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、总结"><span class="nav-number">3.</span> <span class="nav-text">三、总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%90%E8%90%A5%E5%95%86%E5%8A%AB%E6%8C%81"><span class="nav-number">1.</span> <span class="nav-text">一、什么是运营商劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%90%E8%90%A5%E5%95%86%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">什么是运营商：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%AB%E6%8C%81%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">劫持方式：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%98%B2%E8%BF%90%E8%90%A5%E5%95%86%E5%8A%AB%E6%8C%81"><span class="nav-number">2.</span> <span class="nav-text">二、防运营商劫持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">核心功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">兼容性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">三、总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -506,7 +507,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

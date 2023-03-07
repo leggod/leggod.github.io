@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -240,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/06/u16014497194095576012fm214gp0.jpg" alt=""></p>
+        <p><img data-src="http://www.leggod.com/wp-content/uploads/2017/06/u16014497194095576012fm214gp0.jpg"></p>
 <hr>
 <p>这有个故事。为什么所有的引用类型的实例对象都有<code>toString()</code>、<code>valueOf()</code>这两个方法？(引用类型指Object、Array、Function等)，这一定是个悲伤的故事，故事还得从很久以前说起，带着这个疑问，进入到这个故事。</p>
 <ul>
@@ -248,10 +248,10 @@
 <li><strong>所有的对象都继承Object</strong></li>
 <li><strong>所有的函数，只要是new 出来的就是构造函数</strong></li>
 </ul>
-<p>ok，首先我们得知道怎么去创建一个对象：//最简单创建对象的方式 var person = new Object(); person.name=’xin’; person.age=’18’; person.run=function(){ console.log(‘飞快’); }<br /> //还可以用对象字面量语法： var person={ name:’xin’, age:’18’, run:function(){ console.log(‘飞快’); } } //对象就相当于一个人，人是有属性的，比如name。还有方法,比如run。 //好了，已经创建完成了，好的开始是成功的一半。对象也出来了，person也有toString()的方法，我们的问题好像也该有答案了。可聪明的人类绝不止步于此，我要创建很多很多的对象，那不得把我写死。所以又出现了一种工厂模式（虽然ECMAScript没有类的概念），这个工厂模式，就可以看成类，它就是为了创造一个个对象的。</p>
-<p>工程模式，工厂模式中你不用去管这个类是怎么创造的，相当于你早上去买面，给钱拿面就好，不用管这面怎么做出来的。（理解这个，对理解很抽象的面向对象很有帮助） function Person (name,age){ var o =new Object(); o.name=name; o.age=age; return o; } var person1=Person(‘xin’,18); //实例化两个对象 var person2=Person(‘zhang’,19);按照故事情节发展，工程模式肯定是有不足的。对，它创造出来的对象是什么类型呢？（确实是Object，但你知道为什么是Object吗？）</p>
-<p>构造函数，构造函数里面有个<code>constructor</code>属性最初就是来识别对象类型的。 function Person (name,age){ this.name=name; //this指向的是实例对象。如果window下调用，可以用apply来改变this指 this.age=age; //向window的问题。 this.say=function(){ console.log(this); } } var person1=new Person(‘xin’,18); var person2=new Person(‘zhang’,19); alert(person1.constructor==Person); //true; alert(person1 instanceof Person); //true不过要说检测对象类型还是<code>instanceof</code>更靠谱些，因为它可以检测对象的原型链。并且构造函数也是有问题的，每实例化一个对象，是需要占用内存的且作用域不同，就算实例化对象之间有同一个属性方法。所以不同实例上的同名属性方法是不相等的。</p>
-<p>原型模式，每个函数都有一个prototype的属性，它指向一个原型对象。在这个对象上的属性方法可以共享给实例对象的。 function Person (){} Person.prototype.name=’xin’; Person.prototype.age=’18’; Person.prototype.say=function(){ console.log(this) } var person1 = new Person(); var person2 = new Person(); alert(person1.say==person2.say);//true; /<em>在访问某一个属性的时候 </em> 1.首先会在当前对象中查找该属性， <em> 2.如果没有找到，会在构造方法里面查找 </em> 3.如果还没有找到，会在构造函数的 prototype 属性中查找 */ //原型模式下name、age、say是相同的都属于一个原型对象；好比两个孩子没钱，去找各自爸爸要，老爸也没有，但是他们有个共同的爷爷，在爷爷那拿到钱。 其实这里大概已经解释了，为什么所有的实例化对象都有<code>toString()</code>、<code>valueOf()</code>方法了。实例对象是没有，它们会去构造方法中找，构造方法没有，就去原型对象中找，原型对象没有，他们就到原型对象的原型对象中找，一直找到<code>Object</code>。（原型链的终点是null）</p>
+<p>ok，首先我们得知道怎么去创建一个对象：&#x2F;&#x2F;最简单创建对象的方式 var person &#x3D; new Object(); person.name&#x3D;’xin’; person.age&#x3D;’18’; person.run&#x3D;function(){ console.log(‘飞快’); }<br /> &#x2F;&#x2F;还可以用对象字面量语法： var person&#x3D;{ name:’xin’, age:’18’, run:function(){ console.log(‘飞快’); } } &#x2F;&#x2F;对象就相当于一个人，人是有属性的，比如name。还有方法,比如run。 &#x2F;&#x2F;好了，已经创建完成了，好的开始是成功的一半。对象也出来了，person也有toString()的方法，我们的问题好像也该有答案了。可聪明的人类绝不止步于此，我要创建很多很多的对象，那不得把我写死。所以又出现了一种工厂模式（虽然ECMAScript没有类的概念），这个工厂模式，就可以看成类，它就是为了创造一个个对象的。</p>
+<p>工程模式，工厂模式中你不用去管这个类是怎么创造的，相当于你早上去买面，给钱拿面就好，不用管这面怎么做出来的。（理解这个，对理解很抽象的面向对象很有帮助） function Person (name,age){ var o &#x3D;new Object(); o.name&#x3D;name; o.age&#x3D;age; return o; } var person1&#x3D;Person(‘xin’,18); &#x2F;&#x2F;实例化两个对象 var person2&#x3D;Person(‘zhang’,19);按照故事情节发展，工程模式肯定是有不足的。对，它创造出来的对象是什么类型呢？（确实是Object，但你知道为什么是Object吗？）</p>
+<p>构造函数，构造函数里面有个<code>constructor</code>属性最初就是来识别对象类型的。 function Person (name,age){ this.name&#x3D;name; &#x2F;&#x2F;this指向的是实例对象。如果window下调用，可以用apply来改变this指 this.age&#x3D;age; &#x2F;&#x2F;向window的问题。 this.say&#x3D;function(){ console.log(this); } } var person1&#x3D;new Person(‘xin’,18); var person2&#x3D;new Person(‘zhang’,19); alert(person1.constructor&#x3D;&#x3D;Person); &#x2F;&#x2F;true; alert(person1 instanceof Person); &#x2F;&#x2F;true不过要说检测对象类型还是<code>instanceof</code>更靠谱些，因为它可以检测对象的原型链。并且构造函数也是有问题的，每实例化一个对象，是需要占用内存的且作用域不同，就算实例化对象之间有同一个属性方法。所以不同实例上的同名属性方法是不相等的。</p>
+<p>原型模式，每个函数都有一个prototype的属性，它指向一个原型对象。在这个对象上的属性方法可以共享给实例对象的。 function Person (){} Person.prototype.name&#x3D;’xin’; Person.prototype.age&#x3D;’18’; Person.prototype.say&#x3D;function(){ console.log(this) } var person1 &#x3D; new Person(); var person2 &#x3D; new Person(); alert(person1.say&#x3D;&#x3D;person2.say);&#x2F;&#x2F;true; &#x2F;*在访问某一个属性的时候 * 1.首先会在当前对象中查找该属性， * 2.如果没有找到，会在构造方法里面查找 * 3.如果还没有找到，会在构造函数的 prototype 属性中查找 *&#x2F; &#x2F;&#x2F;原型模式下name、age、say是相同的都属于一个原型对象；好比两个孩子没钱，去找各自爸爸要，老爸也没有，但是他们有个共同的爷爷，在爷爷那拿到钱。 其实这里大概已经解释了，为什么所有的实例化对象都有<code>toString()</code>、<code>valueOf()</code>方法了。实例对象是没有，它们会去构造方法中找，构造方法没有，就去原型对象中找，原型对象没有，他们就到原型对象的原型对象中找，一直找到<code>Object</code>。（原型链的终点是null）</p>
 <p>下期更精彩，详细说说<code>prototype</code>和继承。</p>
 
     </div>
@@ -391,7 +391,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

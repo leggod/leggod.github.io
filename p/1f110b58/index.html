@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 6.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -243,14 +243,14 @@
 <p><code>http</code> 对于每个开发人员来说都再熟悉不过，客户端发起请求，服务器响应，似乎很合理。<code>WebSocket</code>就是来打破这种合理的，服务器也可以主动的，这样一个优雅的方案就诞生了。服务器主动向客户端发消息，把clilent A的数据，主动给client B、C、D等等。</p>
 <h4 id="1、搭建node环境"><a href="#1、搭建node环境" class="headerlink" title="1、搭建node环境"></a>1、搭建node环境</h4><p>a.如node环境没装的请自行安装</p>
 <p>b.在本地建一个文件夹,如<code>20171210</code></p>
-<p>c/1.你可以<code>npm init</code> ，在<code>npm install espress --save</code>和 <code>npm install --save socket.io</code></p>
-<p>c/2.新建一个package.json，导入如下代码，再<code>npm install</code></p>
+<p>c&#x2F;1.你可以<code>npm init</code> ，在<code>npm install espress --save</code>和 <code>npm install --save socket.io</code></p>
+<p>c&#x2F;2.新建一个package.json，导入如下代码，再<code>npm install</code></p>
 <p><code>notice：</code><strong>一定要在<code>20171210</code> 目录下打开终端输入</strong></p>
 <p>{ “name”: “chat”, “version”: “0.0.1”, “description”: “my chat”, “dependencies”: { “express”: “^4.15.2”, “socket.io”: “^2.0.4” } }</p>
-<h4 id="2、创建node脚本"><a href="#2、创建node脚本" class="headerlink" title="2、创建node脚本"></a>2、创建<code>node</code>脚本</h4><p>新建<code>server.js</code>文件，内容如下，之后使用<code>node server.js</code>运行脚本var app = require(‘express’)(); var http = require(‘http’).Server(app); var io = require(‘socket.io’)(http); app.get(‘/‘, function(req, res){ //__dirname 是node的全局变量global的属性（类似浏览器的window），表当前模块的文件夹名称 res.sendFile(__dirname + ‘/index.html’);//默认打开index.html文件，暂并没有创建该文件，所以打开localhost:3001会报错 }); //建立连接 io.on(‘connection’, function(socket){ //监听客户端的message事件 socket.on(‘message’, function(msg){ //把client A发来的数据，给更多的client,客户端要监听这个reversion 才可拿到服务器发来的消息 io.emit(‘reversion’, msg); }); }); //websocket 也是建立再http基础上的，并监听3001端口 http.listen(3001, function(){ console.log(‘监听成功’); });</p>
-<h4 id="3、客户端（浏览器）需要做的操作"><a href="#3、客户端（浏览器）需要做的操作" class="headerlink" title="3、客户端（浏览器）需要做的操作"></a>3、客户端（浏览器）需要做的操作</h4><p>此处只展示script里的部分，切为演示效果把需要发送的内容写死，前端效果请自行编写，可在当前目录都建几个html，相当于每一个html就是一个用户，每一个用户都会送到消息，当然也可以发送不同的消息//引入socket脚本 <script src="/socket.io/socket.io.js"></script> <script src="https://code.jquery.com/jquery-1.11.1.js"></script> <script> $(function () { //实例化socket var socket = io(); //前端提交， $(‘form’).submit(function(){ //后台已经监听了message事件，把字符串发送给后台 socket.emit(‘message’, ‘我是要发送的数据’); }); //客户点监听reversion事件，msg为回调数据（刚发送的数据） socket.on(‘reversion’, function(msg){ console.log(‘服务器发来的数据是:’+mes); }); }); </script></p>
+<h4 id="2、创建node脚本"><a href="#2、创建node脚本" class="headerlink" title="2、创建node脚本"></a>2、创建<code>node</code>脚本</h4><p>新建<code>server.js</code>文件，内容如下，之后使用<code>node server.js</code>运行脚本var app &#x3D; require(‘express’)(); var http &#x3D; require(‘http’).Server(app); var io &#x3D; require(‘socket.io’)(http); app.get(‘&#x2F;‘, function(req, res){ &#x2F;&#x2F;__dirname 是node的全局变量global的属性（类似浏览器的window），表当前模块的文件夹名称 res.sendFile(__dirname + ‘&#x2F;index.html’);&#x2F;&#x2F;默认打开index.html文件，暂并没有创建该文件，所以打开localhost:3001会报错 }); &#x2F;&#x2F;建立连接 io.on(‘connection’, function(socket){ &#x2F;&#x2F;监听客户端的message事件 socket.on(‘message’, function(msg){ &#x2F;&#x2F;把client A发来的数据，给更多的client,客户端要监听这个reversion 才可拿到服务器发来的消息 io.emit(‘reversion’, msg); }); }); &#x2F;&#x2F;websocket 也是建立再http基础上的，并监听3001端口 http.listen(3001, function(){ console.log(‘监听成功’); });</p>
+<h4 id="3、客户端（浏览器）需要做的操作"><a href="#3、客户端（浏览器）需要做的操作" class="headerlink" title="3、客户端（浏览器）需要做的操作"></a>3、客户端（浏览器）需要做的操作</h4><p>此处只展示script里的部分，切为演示效果把需要发送的内容写死，前端效果请自行编写，可在当前目录都建几个html，相当于每一个html就是一个用户，每一个用户都会送到消息，当然也可以发送不同的消息&#x2F;&#x2F;引入socket脚本 <script src="/socket.io/socket.io.js"></script> <script src="https://code.jquery.com/jquery-1.11.1.js"></script> <script> $(function () { //实例化socket var socket = io(); //前端提交， $('form').submit(function(){ //后台已经监听了message事件，把字符串发送给后台 socket.emit('message', '我是要发送的数据'); }); //客户点监听reversion事件，msg为回调数据（刚发送的数据） socket.on('reversion', function(msg){ console.log('服务器发来的数据是:'+mes); }); }); </script></p>
 <h4 id="4、效果"><a href="#4、效果" class="headerlink" title="4、效果"></a>4、效果</h4><p>具体效果，有时间会在此处展示出来，不早了，收拾收拾回家，明周一正常工作日，加油</p>
-<p>项目地址<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbnNoYW5pL3dlYnNvY2tldC0tZGVtbw==">https://github.com/xinshani/websocket–demo<i class="fa fa-external-link-alt"></i></span></p>
+<p>项目地址<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbnNoYW5pL3dlYnNvY2tldC0tZGVtbw==">https://github.com/xinshani/websocket--demo<i class="fa fa-external-link-alt"></i></span></p>
 
     </div>
 
@@ -335,7 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、搭建node环境"><span class="nav-number">1.</span> <span class="nav-text">1、搭建node环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、创建node脚本"><span class="nav-number">2.</span> <span class="nav-text">2、创建node脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、客户端（浏览器）需要做的操作"><span class="nav-number">3.</span> <span class="nav-text">3、客户端（浏览器）需要做的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、效果"><span class="nav-number">4.</span> <span class="nav-text">4、效果</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%90%AD%E5%BB%BAnode%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">1、搭建node环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BAnode%E8%84%9A%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">2、创建node脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%89%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">3、客户端（浏览器）需要做的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E6%95%88%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">4、效果</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -391,7 +391,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
